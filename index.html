@@ -5,135 +5,179 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Shiroworks Garage</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;700&family=Rajdhani:wght@600&display=swap" rel="stylesheet">
 
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Montserrat, sans-serif;
-}
+* { box-sizing: border-box; }
 
 body {
-    background: #0a1f24;
-    color: white;
+    margin: 0;
+    font-family: "Zen Kaku Gothic New", Arial, sans-serif;
+    background-color: #0a1f24;
+    color: #f2f2f2;
     overflow-x: hidden;
 }
 
-/* HERO */
+header {
+    position: sticky;
+    top: 0;
+    background-color: rgba(10,31,36,0.95);
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.logo-wrap { position: relative; }
+
+.sun {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background: radial-gradient(circle, #ffb703, #ff4d6d);
+    border-radius: 50%;
+    top: -15px;
+    left: -20px;
+    z-index: -1;
+}
+
+header h1 {
+    margin: 0;
+    font-family: "Rajdhani", sans-serif;
+    color: #ffb703;
+    letter-spacing: 2px;
+    font-size: 24px;
+}
+
+nav { display: flex; gap: 15px; }
+
+nav a {
+    color: #ff4d6d;
+    text-decoration: none;
+    font-weight: bold;
+}
+
 .hero {
-    min-height: 100vh;
-    width: 100%;
-    background: linear-gradient(135deg, #0a1f24, #102f36);
-    position: relative;
+    min-height: 70vh;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
+    padding: 30px;
+    background: linear-gradient(135deg, #0a1f24, #ff4d6d, #ffb703);
 }
 
-/* Rising Sun */
-.sun {
-    position: absolute;
-    bottom: -200px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, #d94c4c 0%, #7a1f1f 70%);
-    border-radius: 50%;
-    opacity: 0.25;
-}
-
-/* Petals */
-.petal {
-    position: absolute;
-    width: 14px;
-    height: 14px;
-    background: rgba(255,150,150,0.5);
-    border-radius: 50% 50% 50% 0;
-    animation: fall 10s linear infinite;
-}
-
-@keyframes fall {
-    from {transform: translateY(-50px) rotate(0deg);}
-    to {transform: translateY(110vh) rotate(360deg);}
-}
-
-.hero-content {
-    position: relative;
-    z-index: 2;
-    padding: 20px;
-}
-
-.hero h1 {
-    font-family: "Noto Serif JP", serif;
-    font-size: clamp(2.5rem, 5vw, 4rem);
+.hero h2 {
+    font-size: 40px;
+    font-family: "Rajdhani", sans-serif;
+    color: #0a1f24;
 }
 
 .hero p {
-    margin: 15px 0;
-    font-size: 1.2rem;
+    max-width: 600px;
+    color: #0a1f24;
 }
 
 .hero button {
-    padding: 12px 26px;
+    margin-top: 20px;
+    padding: 12px 24px;
     border: none;
-    border-radius: 30px;
-    background: linear-gradient(135deg, #1e7c86, #38b0a3);
-    color: white;
+    border-radius: 8px;
+    background-color: #ff4d6d;
+    color: #0a1f24;
+    font-weight: bold;
     cursor: pointer;
 }
 
-/* SELECTIONS */
-.selections {
+.section {
+    padding: 50px 15px;
+    max-width: 1100px;
+    margin: auto;
+}
+
+.section h2 {
+    text-align: center;
+    color: #ffb703;
+    font-family: "Rajdhani", sans-serif;
+}
+
+.services {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 20px;
-    padding: 60px 10%;
-    background: #0e262b;
 }
 
 .card {
-    padding: 25px;
+    background: linear-gradient(135deg, #102a2f, #1a3f45);
+    padding: 20px;
     border-radius: 14px;
-    background: linear-gradient(135deg, #123a41, #0f2b30);
-    transition: 0.3s;
+    transition: transform 0.2s, background 0.3s;
 }
 
 .card:hover {
-    background: linear-gradient(135deg, #1e7c86, #38b0a3);
+    background: linear-gradient(135deg, #ff4d6d, #ffb703);
     transform: translateY(-5px);
 }
 
-/* FORM OVERLAY */
+.jp {
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: #ffb703;
+}
+
+.card h3 {
+    color: #ff4d6d;
+    font-family: "Rajdhani", sans-serif;
+}
+
+.card:hover h3,
+.card:hover p,
+.card:hover .jp {
+    color: #0a1f24;
+}
+
+.about-box, .contact-box div {
+    background-color: #102a2f;
+    padding: 25px;
+    border-radius: 14px;
+    text-align: center;
+}
+
+.contact-box {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+footer {
+    background-color: #061417;
+    text-align: center;
+    padding: 15px;
+    color: #ff4d6d;
+}
+
+/* Form */
 .form-overlay {
     position: fixed;
     top: 0;
-    right: -100%;
+    left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(10,31,36,0.95);
-    display: flex;
-    justify-content: flex-end;
-    transition: 0.4s;
-    z-index: 10;
-}
-
-.form-overlay.active {
-    right: 0;
+    background: rgba(10,31,36,0.9);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
 }
 
 .form-box {
-    width: 100%;
+    background: #102a2f;
+    padding: 25px;
+    border-radius: 12px;
+    width: 90%;
     max-width: 400px;
-    background: #102f36;
-    padding: 30px;
-}
-
-.form-box h2 {
-    margin-bottom: 15px;
+    text-align: center;
 }
 
 .form-box input,
@@ -146,66 +190,118 @@ body {
 }
 
 .form-box button {
+    margin: 5px;
     padding: 10px 18px;
     border: none;
     border-radius: 6px;
-    margin-right: 6px;
     cursor: pointer;
 }
 
-/* MOBILE */
-@media(max-width:600px){
-    .hero p {font-size: 1rem;}
+/* Petals */
+.petal {
+    position: fixed;
+    top: -50px;
+    width: 10px;
+    height: 10px;
+    background: radial-gradient(circle, #ffd1dc, #ff4d6d);
+    border-radius: 50%;
+    animation: fall linear infinite;
+    opacity: 0.6;
+}
+
+@keyframes fall {
+    0% { transform: translateY(0) rotate(0deg); }
+    100% { transform: translateY(110vh) rotate(360deg); }
+}
+
+@media (max-width: 768px) {
+    header { flex-direction: column; gap: 10px; }
+    .hero h2 { font-size: 30px; }
+    .contact-box { grid-template-columns: 1fr; }
 }
 </style>
 </head>
 
 <body>
 
-<div class="hero">
-    <div class="sun"></div>
+<div class="petal" style="left:15%; animation-duration:14s;"></div>
+<div class="petal" style="left:35%; animation-duration:18s;"></div>
+<div class="petal" style="left:55%; animation-duration:12s;"></div>
+<div class="petal" style="left:75%; animation-duration:20s;"></div>
 
-    <div class="petal" style="left:10%;animation-delay:0s"></div>
-    <div class="petal" style="left:30%;animation-delay:2s"></div>
-    <div class="petal" style="left:50%;animation-delay:4s"></div>
-    <div class="petal" style="left:70%;animation-delay:1s"></div>
-    <div class="petal" style="left:90%;animation-delay:3s"></div>
-
-    <div class="hero-content">
+<header>
+    <div class="logo-wrap">
+        <div class="sun"></div>
         <h1>Shiroworks Garage</h1>
-        <p>Street Power. Track Precision.</p>
+    </div>
+    <nav>
+        <a href="#services">Services</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <div>
+        <h2>Street Power. Track Precision.</h2>
+        <p>Performance tuning inspired by Japanese street culture.</p>
         <button onclick="openForm()">Schedule a Session</button>
     </div>
-</div>
-
-<section class="selections">
-    <div class="card">Engine Builds</div>
-    <div class="card">Suspension Tuning</div>
-    <div class="card">Aero and Body</div>
-    <div class="card">Dyno and ECU</div>
 </section>
 
+<section class="section" id="services">
+<h2>Our Services</h2>
+<div class="services">
+<div class="card"><span class="jp">Kaizen</span><h3>ECU Tuning</h3><p>Precision engine maps.</p></div>
+<div class="card"><span class="jp">Shinkou</span><h3>Forced Induction</h3><p>Turbo and supercharger installs.</p></div>
+<div class="card"><span class="jp">Seigyo</span><h3>Handling</h3><p>Suspension and brake upgrades.</p></div>
+<div class="card"><span class="jp">Takumi</span><h3>Fabrication</h3><p>Custom exhaust and parts.</p></div>
+</div>
+</section>
+
+<section class="section" id="about">
+<h2>About Us</h2>
+<div class="about-box">
+<p>Shiroworks Garage blends performance engineering with Japanese street craftsmanship.</p>
+</div>
+</section>
+
+<section class="section" id="contact">
+<h2>Contact</h2>
+<div class="contact-box">
+<div><p>Email</p><strong>shiroworksgarage@gmail.com</strong></div>
+<div><p>Phone</p><strong>(555) 123-4567</strong></div>
+</div>
+</section>
+
+<footer>
+<p>2026 Shiroworks Garage</p>
+</footer>
+
 <div id="bookingForm" class="form-overlay">
-  <div class="form-box">
-    <h2>Schedule a Session</h2>
-    <form action="https://api.web3forms.com/submit" method="POST">
-      <input type="hidden" name="access_key" value="4792c267-b2bc-41d2-800e-13aa704dee07">
-      <input type="text" name="name" placeholder="Your Name" required>
-      <input type="email" name="email" placeholder="Your Email" required>
-      <textarea name="message" placeholder="What work do you want done?" required></textarea>
-      <button type="submit">Submit</button>
-      <button type="button" onclick="closeForm()">Cancel</button>
-    </form>
-  </div>
+<div class="form-box">
+<h2>Schedule a Session</h2>
+
+<form action="https://api.web3forms.com/submit" method="POST">
+<input type="hidden" name="access_key" value="4792c267-b2bc-41d2-800e-13aa704dee07">
+
+<input type="text" name="name" placeholder="Your Name" required>
+<input type="email" name="email" placeholder="Your Email" required>
+<textarea name="message" placeholder="What work do you want done?" required></textarea>
+
+<button type="submit">Submit</button>
+<button type="button" onclick="closeForm()">Cancel</button>
+</form>
+</div>
 </div>
 
 <script>
-function openForm(){
-    document.getElementById("bookingForm").classList.add("active");
+function openForm() {
+    document.getElementById("bookingForm").style.display = "flex";
 }
 
-function closeForm(){
-    document.getElementById("bookingForm").classList.remove("active");
+function closeForm() {
+    document.getElementById("bookingForm").style.display = "none";
 }
 </script>
 
