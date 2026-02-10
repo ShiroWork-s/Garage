@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Shiroworks Garage</title>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+
     <style>
         * {
             box-sizing: border-box;
@@ -11,7 +15,7 @@
 
         body {
             margin: 0;
-            font-family: Arial, sans-serif;
+            font-family: "Zen Kaku Gothic New", Arial, sans-serif;
             background-color: #0a1f24;
             color: #f2f2f2;
         }
@@ -19,17 +23,19 @@
         header {
             position: sticky;
             top: 0;
-            background-color: rgba(10, 31, 36, 0.95);
+            background-color: rgba(10,31,36,0.95);
             padding: 15px 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border-bottom: 2px solid #ff4d6d;
         }
 
         header h1 {
             margin: 0;
+            font-family: "Rajdhani", sans-serif;
             color: #ffb703;
-            letter-spacing: 1px;
+            letter-spacing: 3px;
         }
 
         nav a {
@@ -37,6 +43,7 @@
             margin-left: 20px;
             text-decoration: none;
             font-weight: bold;
+            letter-spacing: 1px;
         }
 
         nav a:hover {
@@ -56,7 +63,9 @@
         .hero h2 {
             font-size: 52px;
             margin-bottom: 15px;
+            font-family: "Rajdhani", sans-serif;
             color: #0a1f24;
+            letter-spacing: 2px;
         }
 
         .hero p {
@@ -76,6 +85,7 @@
             cursor: pointer;
             font-size: 16px;
             color: #0a1f24;
+            letter-spacing: 1px;
         }
 
         .hero button:hover {
@@ -92,49 +102,73 @@
             text-align: center;
             margin-bottom: 40px;
             color: #ffb703;
+            font-family: "Rajdhani", sans-serif;
+            letter-spacing: 3px;
         }
 
-       .services {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 25px;
-}
+        .services {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 25px;
+        }
 
-.card {
-    background: linear-gradient(135deg, #102a2f, #1a3f45);
-    padding: 25px;
-    border-radius: 14px;
-    box-shadow: 0 0 20px rgba(255,77,109,0.3);
-    transition: transform 0.2s, background 0.3s, box-shadow 0.3s;
-}
+        .card {
+            background: linear-gradient(135deg, #102a2f, #1a3f45);
+            padding: 25px;
+            border-radius: 14px;
+            box-shadow: 0 0 20px rgba(255,77,109,0.3);
+            transition: transform 0.2s, background 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
 
-.card:hover {
-    background: linear-gradient(135deg, #ff4d6d, #ffb703);
-    transform: translateY(-6px);
-    box-shadow: 0 0 30px rgba(255,183,3,0.7);
-}
+        .card::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,183,3,0.15), transparent 60%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
 
-.card h3 {
-    color: #ff4d6d;
-}
+        .card:hover::before {
+            opacity: 1;
+        }
 
-.card:hover h3 {
-    color: #0a1f24;
-}
+        .card:hover {
+            background: linear-gradient(135deg, #ff4d6d, #ffb703);
+            transform: translateY(-6px);
+            box-shadow: 0 0 30px rgba(255,183,3,0.7);
+        }
 
-.card p {
-    color: #e5e7eb;
-}
+        .jp {
+            font-size: 12px;
+            letter-spacing: 3px;
+            color: #ffb703;
+            text-transform: uppercase;
+        }
 
-.card:hover p {
-    color: #0a1f24;
-}
+        .card h3 {
+            margin-top: 5px;
+            color: #ff4d6d;
+            font-family: "Rajdhani", sans-serif;
+        }
 
-        .about-box {
+        .card:hover h3,
+        .card:hover p,
+        .card:hover .jp {
+            color: #0a1f24;
+        }
+
+        .about-box, .contact-box div {
             background-color: #102a2f;
             padding: 30px;
             border-radius: 14px;
             text-align: center;
+            box-shadow: 0 0 15px rgba(255,77,109,0.2);
         }
 
         .contact-box {
@@ -143,18 +177,12 @@
             gap: 20px;
         }
 
-        .contact-box div {
-            background-color: #102a2f;
-            padding: 20px;
-            border-radius: 12px;
-            text-align: center;
-        }
-
         footer {
             background-color: #061417;
             text-align: center;
             padding: 20px;
             color: #ff4d6d;
+            letter-spacing: 2px;
         }
 
         @media (max-width: 700px) {
@@ -181,8 +209,8 @@
 
 <section class="hero">
     <div>
-        <h2>Street Precision.</h2>
-        <p>High performance tuning and modifications inspired by future street builds.</p>
+        <h2>Neon Power. Street Precision.</h2>
+        <p>Performance tuning inspired by Japanese street engineering.</p>
         <button>Schedule Service</button>
     </div>
 </section>
@@ -191,18 +219,22 @@
     <h2>Our Services</h2>
     <div class="services">
         <div class="card">
+            <span class="jp">Kaizen</span>
             <h3>ECU Tuning</h3>
-            <p>Dialed maps for power and reliability.</p>
+            <p>Precision engine maps for power and balance.</p>
         </div>
         <div class="card">
+            <span class="jp">Shinkou</span>
             <h3>Forced Induction</h3>
             <p>Turbo and supercharger installs.</p>
         </div>
         <div class="card">
+            <span class="jp">Seigyo</span>
             <h3>Handling</h3>
             <p>Suspension and brake upgrades.</p>
         </div>
         <div class="card">
+            <span class="jp">Takumi</span>
             <h3>Fabrication</h3>
             <p>Custom exhaust and performance parts.</p>
         </div>
@@ -213,8 +245,8 @@
     <h2>About Us</h2>
     <div class="about-box">
         <p>
-            Shiroworks Garage blends performance engineering with bold style.
-            Built for drivers who want speed and identity.
+            Shiroworks Garage blends performance engineering with Japanese street culture.
+            Built for drivers who respect craftsmanship and speed.
         </p>
     </div>
 </section>
