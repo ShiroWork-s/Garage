@@ -94,29 +94,41 @@
             color: #ffb703;
         }
 
-        .services {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 25px;
-        }
+       .services {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 25px;
+}
 
-        .card {
-            background: linear-gradient(135deg, #102a2f, #1a3f45);
-            padding: 25px;
-            border-radius: 14px;
-            box-shadow: 0 0 25px rgba(255,77,109,0.3);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
+.card {
+    background: linear-gradient(135deg, #102a2f, #1a3f45);
+    padding: 25px;
+    border-radius: 14px;
+    box-shadow: 0 0 20px rgba(255,77,109,0.3);
+    transition: transform 0.2s, background 0.3s, box-shadow 0.3s;
+}
 
-        .card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 0 35px rgba(255,183,3,0.6);
-        }
+.card:hover {
+    background: linear-gradient(135deg, #ff4d6d, #ffb703);
+    transform: translateY(-6px);
+    box-shadow: 0 0 30px rgba(255,183,3,0.7);
+}
 
-        .card h3 {
-            margin-top: 0;
-            color: #ff4d6d;
-        }
+.card h3 {
+    color: #ff4d6d;
+}
+
+.card:hover h3 {
+    color: #0a1f24;
+}
+
+.card p {
+    color: #e5e7eb;
+}
+
+.card:hover p {
+    color: #0a1f24;
+}
 
         .about-box {
             background-color: #102a2f;
