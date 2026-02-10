@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shiroworks Garage</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #0f172a;
+            color: #e5e7eb;
+        }
+
+        header {
+            background-color: #020617;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            color: #38bdf8;
+            margin: 0;
+        }
+
+        nav a {
+            color: #e5e7eb;
+            margin-left: 20px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            color: #38bdf8;
+        }
+
+        .hero {
+            padding: 80px 20px;
+            text-align: center;
+            background: linear-gradient(135deg, #020617, #1e293b);
+        }
+
+        .hero h2 {
+            font-size: 48px;
+            color: #38bdf8;
+        }
+
+        .hero p {
+            max-width: 600px;
+            margin: auto;
+            font-size: 18px;
+        }
+
+        .section {
+            padding: 60px 20px;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .services {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background-color: #020617;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.4);
+        }
+
+        footer {
+            background-color: #020617;
+            text-align: center;
+            padding: 20px;
+            color: #9ca3af;
+        }
+
+        button {
+            background-color: #38bdf8;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0ea5e9;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Shiroworks Garage</h1>
+    <nav>
+        <a href="#services">Services</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <h2>Tuning and Modification Specialists</h2>
+    <p>Performance tuning, custom builds, and professional upgrades for street and track vehicles.</p>
+    <br>
+    <button>Book an Appointment</button>
+</section>
+
+<section class="section" id="services">
+    <h2>Our Services</h2>
+    <div class="services">
+        <div class="card">ECU Tuning</div>
+        <div class="card">Turbo and Supercharger Installs</div>
+        <div class="card">Suspension and Brake Upgrades</div>
+        <div class="card">Custom Fabrication</div>
+    </div>
+</section>
+
+<section class="section" id="about">
+    <h2>About Shiroworks</h2>
+    <p>
+        Shiroworks Garage delivers precision tuning and quality modifications. 
+        Built for enthusiasts who demand power, reliability, and style.
+    </p>
+</section>
+
+<section class="section" id="contact">
+    <h2>Contact Us</h2>
+    <p>Email: shiroworksgarage@gmail.com</p>
+    <p>Phone: (555) 123-4567</p>
+</section>
+
+<footer>
+    <p>2026 Shiroworks Garage. All rights reserved.</p>
+</footer>
+
+</body>
+</html>
