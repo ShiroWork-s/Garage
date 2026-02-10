@@ -4,31 +4,41 @@
     <meta charset="UTF-8">
     <title>Shiroworks Garage</title>
     <style>
+        * {
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
         body {
             margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #0f172a;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background-color: #0b1120;
             color: #e5e7eb;
         }
 
         header {
-            background-color: #020617;
-            padding: 20px;
+            position: sticky;
+            top: 0;
+            background-color: rgba(2, 6, 23, 0.95);
+            backdrop-filter: blur(8px);
+            padding: 15px 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            z-index: 10;
         }
 
         header h1 {
-            color: #38bdf8;
             margin: 0;
+            color: #38bdf8;
+            letter-spacing: 1px;
         }
 
         nav a {
             color: #e5e7eb;
             margin-left: 20px;
             text-decoration: none;
-            font-weight: bold;
+            font-weight: 600;
         }
 
         nav a:hover {
@@ -36,39 +46,97 @@
         }
 
         .hero {
-            padding: 80px 20px;
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             text-align: center;
+            padding: 40px;
             background: linear-gradient(135deg, #020617, #1e293b);
         }
 
         .hero h2 {
-            font-size: 48px;
+            font-size: 52px;
+            margin-bottom: 15px;
             color: #38bdf8;
         }
 
         .hero p {
-            max-width: 600px;
+            max-width: 650px;
             margin: auto;
-            font-size: 18px;
+            font-size: 20px;
+            color: #cbd5f5;
+        }
+
+        .hero button {
+            margin-top: 30px;
+            background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+            border: none;
+            padding: 14px 28px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .hero button:hover {
+            opacity: 0.85;
         }
 
         .section {
-            padding: 60px 20px;
-            max-width: 1000px;
+            padding: 70px 20px;
+            max-width: 1100px;
             margin: auto;
+        }
+
+        .section h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            color: #38bdf8;
         }
 
         .services {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 25px;
         }
 
         .card {
+            background: linear-gradient(135deg, #020617, #111827);
+            padding: 25px;
+            border-radius: 14px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.6);
+        }
+
+        .card h3 {
+            margin-top: 0;
+            color: #7dd3fc;
+        }
+
+        .about-box {
+            background-color: #020617;
+            padding: 30px;
+            border-radius: 14px;
+            text-align: center;
+        }
+
+        .contact-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .contact-box div {
             background-color: #020617;
             padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.4);
+            border-radius: 12px;
+            text-align: center;
         }
 
         footer {
@@ -78,17 +146,14 @@
             color: #9ca3af;
         }
 
-        button {
-            background-color: #38bdf8;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 6px;
-            font-weight: bold;
-            cursor: pointer;
-        }
+        @media (max-width: 700px) {
+            .contact-box {
+                grid-template-columns: 1fr;
+            }
 
-        button:hover {
-            background-color: #0ea5e9;
+            .hero h2 {
+                font-size: 38px;
+            }
         }
     </style>
 </head>
@@ -104,34 +169,57 @@
 </header>
 
 <section class="hero">
-    <h2>Tuning and Modification Specialists</h2>
-    <p>Performance tuning, custom builds, and professional upgrades for street and track vehicles.</p>
-    <br>
-    <button>Book an Appointment</button>
+    <div>
+        <h2>Built for Speed. Tuned for Power.</h2>
+        <p>Professional tuning and modification shop specializing in performance builds for street and track vehicles.</p>
+        <button>Schedule Service</button>
+    </div>
 </section>
 
 <section class="section" id="services">
     <h2>Our Services</h2>
     <div class="services">
-        <div class="card">ECU Tuning</div>
-        <div class="card">Turbo and Supercharger Installs</div>
-        <div class="card">Suspension and Brake Upgrades</div>
-        <div class="card">Custom Fabrication</div>
+        <div class="card">
+            <h3>ECU Tuning</h3>
+            <p>Custom engine maps for power, reliability, and efficiency.</p>
+        </div>
+        <div class="card">
+            <h3>Forced Induction</h3>
+            <p>Turbo and supercharger installs with full support and tuning.</p>
+        </div>
+        <div class="card">
+            <h3>Chassis Upgrades</h3>
+            <p>Suspension, brakes, and alignment for better control.</p>
+        </div>
+        <div class="card">
+            <h3>Fabrication</h3>
+            <p>Custom exhausts, mounts, and performance components.</p>
+        </div>
     </div>
 </section>
 
 <section class="section" id="about">
-    <h2>About Shiroworks</h2>
-    <p>
-        Shiroworks Garage delivers precision tuning and quality modifications. 
-        Built for enthusiasts who demand power, reliability, and style.
-    </p>
+    <h2>About Us</h2>
+    <div class="about-box">
+        <p>
+            Shiroworks Garage is dedicated to high quality craftsmanship and precise tuning.
+            Every build is treated like our own, focusing on power, safety, and clean execution.
+        </p>
+    </div>
 </section>
 
 <section class="section" id="contact">
-    <h2>Contact Us</h2>
-    <p>Email: shiroworksgarage@gmail.com</p>
-    <p>Phone: (555) 123-4567</p>
+    <h2>Contact</h2>
+    <div class="contact-box">
+        <div>
+            <p>Email</p>
+            <strong>shiroworksgarage@gmail.com</strong>
+        </div>
+        <div>
+            <p>Phone</p>
+            <strong>(555) 123-4567</strong>
+        </div>
+    </div>
 </section>
 
 <footer>
