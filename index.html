@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Shiroworks Garage</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;700&family=Rajdhani:wght@600&display=swap" rel="stylesheet">
@@ -13,13 +14,6 @@ body {
     margin: 0;
     font-family: "Zen Kaku Gothic New", Arial, sans-serif;
     background-color: #0a1f24;
-    background-image: repeating-linear-gradient(
-        45deg,
-        rgba(255,255,255,0.02) 0px,
-        rgba(255,255,255,0.02) 2px,
-        transparent 2px,
-        transparent 20px
-    );
     color: #f2f2f2;
     overflow-x: hidden;
 }
@@ -28,25 +22,23 @@ header {
     position: sticky;
     top: 0;
     background-color: rgba(10,31,36,0.95);
-    padding: 20px 30px;
+    padding: 15px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 2px solid #ff4d6d;
+    flex-wrap: wrap;
 }
 
-.logo-wrap {
-    position: relative;
-}
+.logo-wrap { position: relative; }
 
 .sun {
     position: absolute;
-    width: 80px;
-    height: 80px;
+    width: 60px;
+    height: 60px;
     background: radial-gradient(circle, #ffb703, #ff4d6d);
     border-radius: 50%;
-    top: -20px;
-    left: -30px;
+    top: -15px;
+    left: -20px;
     z-index: -1;
 }
 
@@ -54,32 +46,30 @@ header h1 {
     margin: 0;
     font-family: "Rajdhani", sans-serif;
     color: #ffb703;
-    letter-spacing: 3px;
+    letter-spacing: 2px;
+    font-size: 24px;
 }
+
+nav { display: flex; gap: 15px; }
 
 nav a {
     color: #ff4d6d;
-    margin-left: 20px;
     text-decoration: none;
     font-weight: bold;
 }
 
-nav a:hover {
-    color: #ffd166;
-}
-
 .hero {
-    min-height: 90vh;
+    min-height: 70vh;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 40px;
+    padding: 30px;
     background: linear-gradient(135deg, #0a1f24, #ff4d6d, #ffb703);
 }
 
 .hero h2 {
-    font-size: 52px;
+    font-size: 40px;
     font-family: "Rajdhani", sans-serif;
     color: #0a1f24;
 }
@@ -89,8 +79,19 @@ nav a:hover {
     color: #0a1f24;
 }
 
+.hero button {
+    margin-top: 20px;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    background-color: #ff4d6d;
+    color: #0a1f24;
+    font-weight: bold;
+    cursor: pointer;
+}
+
 .section {
-    padding: 70px 20px;
+    padding: 50px 15px;
     max-width: 1100px;
     margin: auto;
 }
@@ -99,30 +100,29 @@ nav a:hover {
     text-align: center;
     color: #ffb703;
     font-family: "Rajdhani", sans-serif;
-    letter-spacing: 3px;
 }
 
 .services {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 25px;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
 }
 
 .card {
     background: linear-gradient(135deg, #102a2f, #1a3f45);
-    padding: 25px;
+    padding: 20px;
     border-radius: 14px;
     transition: transform 0.2s, background 0.3s;
 }
 
 .card:hover {
     background: linear-gradient(135deg, #ff4d6d, #ffb703);
-    transform: translateY(-6px);
+    transform: translateY(-5px);
 }
 
 .jp {
-    font-size: 12px;
-    letter-spacing: 3px;
+    font-size: 11px;
+    letter-spacing: 2px;
     color: #ffb703;
 }
 
@@ -139,7 +139,7 @@ nav a:hover {
 
 .about-box, .contact-box div {
     background-color: #102a2f;
-    padding: 30px;
+    padding: 25px;
     border-radius: 14px;
     text-align: center;
 }
@@ -147,42 +147,87 @@ nav a:hover {
 .contact-box {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 20px;
+    gap: 15px;
 }
 
 footer {
     background-color: #061417;
     text-align: center;
-    padding: 20px;
+    padding: 15px;
     color: #ff4d6d;
+}
+
+/* Form */
+.form-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(10,31,36,0.9);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+}
+
+.form-box {
+    background: #102a2f;
+    padding: 25px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.form-box input,
+.form-box textarea {
+    width: 100%;
+    margin-bottom: 12px;
+    padding: 10px;
+    border-radius: 6px;
+    border: none;
+}
+
+.form-box button {
+    margin: 5px;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
 }
 
 /* Petals */
 .petal {
     position: fixed;
     top: -50px;
-    width: 12px;
-    height: 12px;
+    width: 10px;
+    height: 10px;
     background: radial-gradient(circle, #ffd1dc, #ff4d6d);
     border-radius: 50%;
     animation: fall linear infinite;
-    opacity: 0.7;
+    opacity: 0.6;
 }
 
 @keyframes fall {
     0% { transform: translateY(0) rotate(0deg); }
     100% { transform: translateY(110vh) rotate(360deg); }
 }
+
+@media (max-width: 768px) {
+    header { flex-direction: column; gap: 10px; }
+    .hero h2 { font-size: 30px; }
+    .contact-box { grid-template-columns: 1fr; }
+}
 </style>
 </head>
 
 <body>
 
-<div class="petal" style="left:10%; animation-duration:12s;"></div>
-<div class="petal" style="left:30%; animation-duration:15s;"></div>
-<div class="petal" style="left:50%; animation-duration:10s;"></div>
-<div class="petal" style="left:70%; animation-duration:18s;"></div>
-<div class="petal" style="left:90%; animation-duration:14s;"></div>
+<div class="petal" style="left:15%; animation-duration:14s;"></div>
+<div class="petal" style="left:35%; animation-duration:18s;"></div>
+<div class="petal" style="left:55%; animation-duration:12s;"></div>
+<div class="petal" style="left:75%; animation-duration:20s;"></div>
 
 <header>
     <div class="logo-wrap">
@@ -200,6 +245,7 @@ footer {
     <div>
         <h2>Street Power. Track Precision.</h2>
         <p>Performance tuning inspired by Japanese street culture.</p>
+        <button onclick="openForm()">Schedule a Session</button>
     </div>
 </section>
 
@@ -216,7 +262,7 @@ footer {
 <section class="section" id="about">
 <h2>About Us</h2>
 <div class="about-box">
-<p>Shiroworks Garage blends performance engineering with Japanese street design and craftsmanship.</p>
+<p>Shiroworks Garage blends performance engineering with Japanese street craftsmanship.</p>
 </div>
 </section>
 
@@ -231,6 +277,33 @@ footer {
 <footer>
 <p>2026 Shiroworks Garage</p>
 </footer>
+
+<div id="bookingForm" class="form-overlay">
+<div class="form-box">
+<h2>Schedule a Session</h2>
+
+<form action="https://api.web3forms.com/submit" method="POST">
+<input type="hidden" name="access_key" value="4792c267-b2bc-41d2-800e-13aa704dee07">
+
+<input type="text" name="name" placeholder="Your Name" required>
+<input type="email" name="email" placeholder="Your Email" required>
+<textarea name="message" placeholder="What work do you want done?" required></textarea>
+
+<button type="submit">Submit</button>
+<button type="button" onclick="closeForm()">Cancel</button>
+</form>
+</div>
+</div>
+
+<script>
+function openForm() {
+    document.getElementById("bookingForm").style.display = "flex";
+}
+
+function closeForm() {
+    document.getElementById("bookingForm").style.display = "none";
+}
+</script>
 
 </body>
 </html>
