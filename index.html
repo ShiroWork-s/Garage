@@ -1,205 +1,194 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Shiroworks Garage</title>
+<meta charset="UTF-8">
+<title>Shiroworks Garage</title>
 
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;700&family=Rajdhani:wght@600&display=swap" rel="stylesheet">
 
-    <style>
-        * {
-            box-sizing: border-box;
-            scroll-behavior: smooth;
-        }
+<style>
+* { box-sizing: border-box; }
 
-        body {
-            margin: 0;
-            font-family: "Zen Kaku Gothic New", Arial, sans-serif;
-            background-color: #0a1f24;
-            color: #f2f2f2;
-        }
+body {
+    margin: 0;
+    font-family: "Zen Kaku Gothic New", Arial, sans-serif;
+    background-color: #0a1f24;
+    background-image: repeating-linear-gradient(
+        45deg,
+        rgba(255,255,255,0.02) 0px,
+        rgba(255,255,255,0.02) 2px,
+        transparent 2px,
+        transparent 20px
+    );
+    color: #f2f2f2;
+    overflow-x: hidden;
+}
 
-        header {
-            position: sticky;
-            top: 0;
-            background-color: rgba(10,31,36,0.95);
-            padding: 15px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid #ff4d6d;
-        }
+header {
+    position: sticky;
+    top: 0;
+    background-color: rgba(10,31,36,0.95);
+    padding: 20px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #ff4d6d;
+}
 
-        header h1 {
-            margin: 0;
-            font-family: "Rajdhani", sans-serif;
-            color: #ffb703;
-            letter-spacing: 3px;
-        }
+.logo-wrap {
+    position: relative;
+}
 
-        nav a {
-            color: #ff4d6d;
-            margin-left: 20px;
-            text-decoration: none;
-            font-weight: bold;
-            letter-spacing: 1px;
-        }
+.sun {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    background: radial-gradient(circle, #ffb703, #ff4d6d);
+    border-radius: 50%;
+    top: -20px;
+    left: -30px;
+    z-index: -1;
+}
 
-        nav a:hover {
-            color: #ffd166;
-        }
+header h1 {
+    margin: 0;
+    font-family: "Rajdhani", sans-serif;
+    color: #ffb703;
+    letter-spacing: 3px;
+}
 
-        .hero {
-            min-height: 90vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 40px;
-            background: linear-gradient(135deg, #0a1f24, #ff4d6d, #ffb703);
-        }
+nav a {
+    color: #ff4d6d;
+    margin-left: 20px;
+    text-decoration: none;
+    font-weight: bold;
+}
 
-        .hero h2 {
-            font-size: 52px;
-            margin-bottom: 15px;
-            font-family: "Rajdhani", sans-serif;
-            color: #0a1f24;
-            letter-spacing: 2px;
-        }
+nav a:hover {
+    color: #ffd166;
+}
 
-        .hero p {
-            max-width: 650px;
-            margin: auto;
-            font-size: 20px;
-            color: #0a1f24;
-        }
+.hero {
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px;
+    background: linear-gradient(135deg, #0a1f24, #ff4d6d, #ffb703);
+}
 
-        .hero button {
-            margin-top: 30px;
-            background-color: #ff4d6d;
-            border: none;
-            padding: 14px 28px;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 16px;
-            color: #0a1f24;
-            letter-spacing: 1px;
-        }
+.hero h2 {
+    font-size: 52px;
+    font-family: "Rajdhani", sans-serif;
+    color: #0a1f24;
+}
 
-        .hero button:hover {
-            background-color: #ffd166;
-        }
+.hero p {
+    max-width: 600px;
+    color: #0a1f24;
+}
 
-        .section {
-            padding: 70px 20px;
-            max-width: 1100px;
-            margin: auto;
-        }
+.section {
+    padding: 70px 20px;
+    max-width: 1100px;
+    margin: auto;
+}
 
-        .section h2 {
-            text-align: center;
-            margin-bottom: 40px;
-            color: #ffb703;
-            font-family: "Rajdhani", sans-serif;
-            letter-spacing: 3px;
-        }
+.section h2 {
+    text-align: center;
+    color: #ffb703;
+    font-family: "Rajdhani", sans-serif;
+    letter-spacing: 3px;
+}
 
-        .services {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 25px;
-        }
+.services {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 25px;
+}
 
-        .card {
-            background: linear-gradient(135deg, #102a2f, #1a3f45);
-            padding: 25px;
-            border-radius: 14px;
-            box-shadow: 0 0 20px rgba(255,77,109,0.3);
-            transition: transform 0.2s, background 0.3s, box-shadow 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
+.card {
+    background: linear-gradient(135deg, #102a2f, #1a3f45);
+    padding: 25px;
+    border-radius: 14px;
+    transition: transform 0.2s, background 0.3s;
+}
 
-        .card::before {
-            content: "";
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,183,3,0.15), transparent 60%);
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
+.card:hover {
+    background: linear-gradient(135deg, #ff4d6d, #ffb703);
+    transform: translateY(-6px);
+}
 
-        .card:hover::before {
-            opacity: 1;
-        }
+.jp {
+    font-size: 12px;
+    letter-spacing: 3px;
+    color: #ffb703;
+}
 
-        .card:hover {
-            background: linear-gradient(135deg, #ff4d6d, #ffb703);
-            transform: translateY(-6px);
-            box-shadow: 0 0 30px rgba(255,183,3,0.7);
-        }
+.card h3 {
+    color: #ff4d6d;
+    font-family: "Rajdhani", sans-serif;
+}
 
-        .jp {
-            font-size: 12px;
-            letter-spacing: 3px;
-            color: #ffb703;
-            text-transform: uppercase;
-        }
+.card:hover h3,
+.card:hover p,
+.card:hover .jp {
+    color: #0a1f24;
+}
 
-        .card h3 {
-            margin-top: 5px;
-            color: #ff4d6d;
-            font-family: "Rajdhani", sans-serif;
-        }
+.about-box, .contact-box div {
+    background-color: #102a2f;
+    padding: 30px;
+    border-radius: 14px;
+    text-align: center;
+}
 
-        .card:hover h3,
-        .card:hover p,
-        .card:hover .jp {
-            color: #0a1f24;
-        }
+.contact-box {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
 
-        .about-box, .contact-box div {
-            background-color: #102a2f;
-            padding: 30px;
-            border-radius: 14px;
-            text-align: center;
-            box-shadow: 0 0 15px rgba(255,77,109,0.2);
-        }
+footer {
+    background-color: #061417;
+    text-align: center;
+    padding: 20px;
+    color: #ff4d6d;
+}
 
-        .contact-box {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
+/* Petals */
+.petal {
+    position: fixed;
+    top: -50px;
+    width: 12px;
+    height: 12px;
+    background: radial-gradient(circle, #ffd1dc, #ff4d6d);
+    border-radius: 50%;
+    animation: fall linear infinite;
+    opacity: 0.7;
+}
 
-        footer {
-            background-color: #061417;
-            text-align: center;
-            padding: 20px;
-            color: #ff4d6d;
-            letter-spacing: 2px;
-        }
-
-        @media (max-width: 700px) {
-            .contact-box {
-                grid-template-columns: 1fr;
-            }
-
-            .hero h2 {
-                font-size: 38px;
-            }
-        }
-    </style>
+@keyframes fall {
+    0% { transform: translateY(0) rotate(0deg); }
+    100% { transform: translateY(110vh) rotate(360deg); }
+}
+</style>
 </head>
+
 <body>
 
+<div class="petal" style="left:10%; animation-duration:12s;"></div>
+<div class="petal" style="left:30%; animation-duration:15s;"></div>
+<div class="petal" style="left:50%; animation-duration:10s;"></div>
+<div class="petal" style="left:70%; animation-duration:18s;"></div>
+<div class="petal" style="left:90%; animation-duration:14s;"></div>
+
 <header>
-    <h1>Shiroworks Garage</h1>
+    <div class="logo-wrap">
+        <div class="sun"></div>
+        <h1>Shiroworks Garage</h1>
+    </div>
     <nav>
         <a href="#services">Services</a>
         <a href="#about">About</a>
@@ -209,64 +198,38 @@
 
 <section class="hero">
     <div>
-        <h2>Track Power. Street Precision.</h2>
-        <p>Performance tuning inspired by Japanese street engineering.</p>
-        <button>Schedule Service</button>
+        <h2>Neon Power. Street Precision.</h2>
+        <p>Performance tuning inspired by Japanese street culture.</p>
     </div>
 </section>
 
 <section class="section" id="services">
-    <h2>Our Services</h2>
-    <div class="services">
-        <div class="card">
-            <span class="jp">Kaizen</span>
-            <h3>ECU Tuning</h3>
-            <p>Precision engine maps for power and balance.</p>
-        </div>
-        <div class="card">
-            <span class="jp">Shinkou</span>
-            <h3>Forced Induction</h3>
-            <p>Turbo and supercharger installs.</p>
-        </div>
-        <div class="card">
-            <span class="jp">Seigyo</span>
-            <h3>Handling</h3>
-            <p>Suspension and brake upgrades.</p>
-        </div>
-        <div class="card">
-            <span class="jp">Takumi</span>
-            <h3>Fabrication</h3>
-            <p>Custom exhaust and performance parts.</p>
-        </div>
-    </div>
+<h2>Our Services</h2>
+<div class="services">
+<div class="card"><span class="jp">Kaizen</span><h3>ECU Tuning</h3><p>Precision engine maps.</p></div>
+<div class="card"><span class="jp">Shinkou</span><h3>Forced Induction</h3><p>Turbo and supercharger installs.</p></div>
+<div class="card"><span class="jp">Seigyo</span><h3>Handling</h3><p>Suspension and brake upgrades.</p></div>
+<div class="card"><span class="jp">Takumi</span><h3>Fabrication</h3><p>Custom exhaust and parts.</p></div>
+</div>
 </section>
 
 <section class="section" id="about">
-    <h2>About Us</h2>
-    <div class="about-box">
-        <p>
-            Shiroworks Garage blends performance engineering with Japanese street culture.
-            Built for drivers who respect craftsmanship and speed.
-        </p>
-    </div>
+<h2>About Us</h2>
+<div class="about-box">
+<p>Shiroworks Garage blends performance engineering with Japanese street design and craftsmanship.</p>
+</div>
 </section>
 
 <section class="section" id="contact">
-    <h2>Contact</h2>
-    <div class="contact-box">
-        <div>
-            <p>Email</p>
-            <strong>shiroworksgarage@gmail.com</strong>
-        </div>
-        <div>
-            <p>Phone</p>
-            <strong>(555) 123-4567</strong>
-        </div>
-    </div>
+<h2>Contact</h2>
+<div class="contact-box">
+<div><p>Email</p><strong>shiroworksgarage@gmail.com</strong></div>
+<div><p>Phone</p><strong>(555) 123-4567</strong></div>
+</div>
 </section>
 
 <footer>
-    <p>2026 Shiroworks Garage</p>
+<p>2026 Shiroworks Garage</p>
 </footer>
 
 </body>
