@@ -2,103 +2,62 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1,user-scalable=no">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>Shiroworks Offroad</title>
 <style>
-*{box-sizing:border-box}body{margin:0;background:#20282c;color:#fff;font-family:Arial,sans-serif;overflow:hidden}
-#game{display:block;width:100vw;height:100vh;background:#b9c8c5}
-#hud{position:fixed;inset:0;pointer-events:none}
-.panel{background:rgba(37,32,28,.72);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.12);border-radius:18px;color:white}
-#top{position:absolute;top:14px;left:50%;transform:translateX(-50%);padding:12px 18px;display:flex;gap:24px;align-items:center;min-width:250px;justify-content:center;font-size:12px}
-#top strong{font-size:16px;display:block}
-#left{position:absolute;bottom:16px;left:16px;padding:12px;width:230px;font-size:11px}
-#right{position:absolute;bottom:16px;right:16px;padding:14px;width:245px}
-.metric{display:flex;justify-content:space-between;align-items:center;margin:7px 0}
-.gauge{height:5px;background:#655d52;border-radius:9px;overflow:hidden;width:100%;margin-top:3px}
-.gauge span{display:block;height:100%;background:#f0b04b;width:30%}
-#speed{font-size:42px;font-weight:bold;text-align:center;font-family:Arial,sans-serif}
-#speed small{font-size:13px}
-#gear{font-size:12px;text-align:center;color:#f0b04b;font-weight:bold}
-#buttons{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);display:flex;gap:12px;pointer-events:auto}
-.ctrl{width:66px;height:66px;border-radius:50%;background:rgba(30,33,35,.5);border:1px solid rgba(255,255,255,.25);color:#fff;font-size:20px;touch-action:none}
-.ctrl:active{background:rgba(241,174,72,.65)}
-#hint{position:absolute;top:86px;left:50%;transform:translateX(-50%);font-size:12px;text-shadow:0 1px 3px #333;opacity:.8}
-#start{position:absolute;inset:0;background:rgba(20,29,33,.38);display:flex;align-items:center;justify-content:center;pointer-events:auto}
-#startbox{max-width:460px;margin:20px;padding:28px;text-align:center}
-#startbox h1{margin:0 0 8px;color:#f2b653;letter-spacing:2px}
-#startbox p{line-height:1.5;color:#eee}
-#startbox button{border:0;border-radius:30px;padding:14px 32px;background:#f2b653;color:#24282b;font-weight:bold;font-size:16px}
-#pause{position:absolute;top:12px;right:12px;pointer-events:auto;border:0;border-radius:20px;padding:9px 14px;background:rgba(30,33,35,.6);color:white}
-@media(max-width:700px){#left{width:170px;bottom:100px;left:8px}#right{width:170px;right:8px;bottom:100px}#speed{font-size:32px}#top{top:8px;gap:12px;padding:10px}#hint{top:74px} .ctrl{width:60px;height:60px}}
+*{box-sizing:border-box}body{margin:0;overflow:hidden;background:#b8c5c0;color:#fff;font-family:Arial,sans-serif}canvas{display:block;width:100vw;height:100vh}
+.panel{background:rgba(32,35,34,.75);backdrop-filter:blur(8px);border:1px solid #ffffff22;border-radius:16px}
+#hud{position:fixed;inset:0;pointer-events:none}#top{position:absolute;top:12px;left:50%;transform:translateX(-50%);display:flex;gap:18px;padding:10px 16px;font-size:11px;text-align:center}#top strong{display:block;font-size:16px}
+#left,#right{position:absolute;bottom:95px;padding:12px;width:190px;font-size:12px}#left{left:10px}#right{right:10px}
+.metric{display:flex;justify-content:space-between;margin:8px 0}.bar{height:5px;background:#555;border-radius:8px;overflow:hidden}.bar span{display:block;height:100%;width:100%;background:#e5b15b}
+#speed{text-align:center;font-size:36px;font-weight:bold}#gear{text-align:center;color:#e5b15b;font-size:12px}
+#controls{position:absolute;bottom:15px;left:50%;transform:translateX(-50%);display:flex;gap:9px;pointer-events:auto}.ctrl{width:62px;height:62px;border-radius:50%;border:1px solid #fff5;background:#2229;color:white;font-size:20px;touch-action:none}
+#hint{position:absolute;top:75px;width:100%;text-align:center;font-size:12px;text-shadow:0 2px 4px #333}
+#pause{position:absolute;top:10px;right:10px;pointer-events:auto;border:0;border-radius:20px;padding:10px;background:#2229;color:white}
+#start{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#18252766;pointer-events:auto}#box{padding:26px;text-align:center;max-width:450px;margin:16px}#box h1{color:#e5b15b}#box button{padding:13px 28px;border:0;border-radius:28px;background:#e5b15b;color:#222;font-weight:bold}
+@media(max-width:650px){#left,#right{width:160px;bottom:90px;font-size:10px}#top{gap:8px}#speed{font-size:30px}.ctrl{width:58px;height:58px}}
 </style>
 </head>
 <body>
-<canvas id="game"></canvas>
+<canvas id="scene"></canvas>
 <div id="hud">
-<div id="top" class="panel"><div><strong id="clock">16:17</strong>FIELD TIME</div><div><strong id="elapsed">0:00</strong>RUN TIME</div><div><strong id="distance">0.0 km</strong>TRAVELLED</div></div>
-<div id="hint">WASD / arrows to drive · Space handbrake · R reset</div>
-<div id="left" class="panel"><div class="metric"><span>ROLL</span><strong id="roll">0°</strong></div><div class="metric"><span>PITCH</span><strong id="pitch">0°</strong></div><div class="metric"><span>DRIVE</span><strong>4WD</strong></div><div class="metric"><span>GROUND</span><strong id="ground">TRAIL</strong></div><div class="metric"><span>GRIP</span><strong id="grip">84%</strong></div></div>
-<div id="right" class="panel"><div class="metric"><span>DAMAGE</span><strong id="damage">0%</strong></div><div class="gauge"><span id="damagebar"></span></div><div class="metric"><span>FUEL</span><strong id="fuel">100%</strong></div><div class="gauge"><span id="fuelbar"></span></div><div id="speed">0 <small>km/h</small></div><div id="gear">LOW RANGE</div><div class="metric"><span>ENGINE</span><strong id="engine">READY</strong></div></div>
+<div id="top" class="panel"><div><strong>FIELD</strong>TIME</div><div><strong id="time">0:00</strong>SESSION</div><div><strong id="dist">0.00</strong>KM</div></div>
+<div id="hint">WASD / ARROWS · SPACE BRAKE · R RESET</div>
+<div id="left" class="panel"><div class="metric"><span>ROLL</span><b id="roll">0°</b></div><div class="metric"><span>PITCH</span><b id="pitch">0°</b></div><div class="metric"><span>DRIVE</span><b>4WD</b></div><div class="metric"><span>GRIP</span><b id="grip">84%</b></div></div>
+<div id="right" class="panel"><div class="metric"><span>DAMAGE</span><b id="damage">0%</b></div><div class="bar"><span id="damageBar"></span></div><div class="metric"><span>FUEL</span><b id="fuel">100%</b></div><div class="bar"><span id="fuelBar"></span></div><div id="speed">0 <small>km/h</small></div><div id="gear">LOW RANGE</div></div>
 <button id="pause">Pause</button>
-<div id="buttons"><button class="ctrl" id="turnL">◀</button><button class="ctrl" id="brake">▼</button><button class="ctrl" id="gas">▲</button><button class="ctrl" id="turnR">▶</button></div>
-<div id="start"><div id="startbox" class="panel"><h1>SHIROWORKS OFFROAD</h1><p>Take your rig across a quiet low-poly wilderness. Crawl over rocks, weave through trees, and find your own trail. Soft engine and ambient sounds.</p><p>Keyboard: WASD or arrows · Space brake · R reset</p><button id="begin">START DRIVE</button></div></div>
+<div id="controls"><button class="ctrl" id="leftBtn">◀</button><button class="ctrl" id="brakeBtn">▼</button><button class="ctrl" id="gasBtn">▲</button><button class="ctrl" id="rightBtn">▶</button></div>
+<div id="start"><div id="box" class="panel"><h1>SHIROWORKS OFFROAD</h1><p>Explore a quiet low-poly wilderness. Crawl over rocks, weave through trees and find your own trail.</p><p>Keyboard: WASD or arrow keys. Space brake. R reset.</p><button id="startBtn">START DRIVE</button></div></div>
 </div>
 <script>
-const canvas=document.getElementById('game'),ctx=canvas.getContext('2d');
-let W,H,dpr,keys={},touch={},started=false,paused=false;
-function resize(){dpr=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;canvas.width=W*dpr;canvas.height=H*dpr;canvas.style.width=W+'px';canvas.style.height=H+'px';ctx.setTransform(dpr,0,0,dpr,0,0)}
-addEventListener('resize',resize);resize();
+(function(){
+const canvas=document.getElementById('scene'),ctx=canvas.getContext('2d');
+let W=0,H=0,dpr=1;function resize(){dpr=Math.min(window.devicePixelRatio||1,2);W=innerWidth;H=innerHeight;canvas.width=W*dpr;canvas.height=H*dpr;canvas.style.width=W+'px';canvas.style.height=H+'px';ctx.setTransform(dpr,0,0,dpr,0,0)}resize();addEventListener('resize',resize);
+let keys={},touch={},started=false,paused=false,last=0,elapsed=0,audio=null,osc=null,gain=null,filter=null;
 let car={x:0,z:0,v:0,yaw:0,roll:0,pitch:0,damage:0,fuel:100,dist:0};
-let worldTime=0,session=0,last=0,particles=[],rocks=[],trees=[],bushes=[];
-function rand(seed){let x=Math.sin(seed*127.1+311.7)*43758.5453;return x-Math.floor(x)}
-for(let i=0;i<230;i++){let z=rand(i+8)*420+12,x=(rand(i+928)*2-1)*24;if(Math.abs(x)>5)trees.push({x,z,size:1.2+rand(i+45)*2})}
-for(let i=0;i<160;i++){rocks.push({x:(rand(i+80)*2-1)*22,z:rand(i+200)*390+8,size:.3+rand(i+300)*1.7,shape:rand(i+4})}
-for(let i=0;i<100;i++){bushes.push({x:(rand(i+40)*2-1)*22,z:rand(i+700)*390+5,size:.5+rand(i+900)*1.2})}
-function terrain(x,z){return Math.sin(z*.075+x*.22)*.45+Math.sin(x*.4)*.22+Math.sin(z*.22)*.18}
-function reset(){car={x:0,z:0,v:0,yaw:0,roll:0,pitch:0,damage:0,fuel:100,dist:0};session=0}
-let audio,engineOsc,engineGain,filter,noiseGain;
-function audioStart(){if(audio)return;audio=new (window.AudioContext||window.webkitAudioContext)();audio.resume();engineOsc=audio.createOscillator();engineOsc.type='sawtooth';filter=audio.createBiquadFilter();filter.type='lowpass';filter.frequency.value=190;engineGain=audio.createGain();engineGain.gain.value=0;engineOsc.connect(filter);filter.connect(engineGain);engineGain.connect(audio.destination);engineOsc.start();
-let noise=audio.createBufferSource(),buf=audio.createBuffer(1,audio.sampleRate*2,audio.sampleRate),data=buf.getChannelData(0);for(let i=0;i<data.length;i++)data[i]=(Math.random()*2-1)*.1;noise.buffer=buf;noise.loop=true;let nf=audio.createBiquadFilter();nf.type='lowpass';nf.frequency.value=400;noiseGain=audio.createGain();noiseGain.gain.value=.015;noise.connect(nf);nf.connect(noiseGain);noiseGain.connect(audio.destination);noise.start();}
-function sounds(){if(!audio)return;let rpm=Math.abs(car.v);engineOsc.frequency.setTargetAtTime(48+rpm*2.7+(keys.w||keys.ArrowUp?12:0),audio.currentTime,.12);filter.frequency.setTargetAtTime(120+rpm*8,audio.currentTime,.2);engineGain.gain.setTargetAtTime(started&&!paused?.035+.025*Math.min(rpm/40,1):0,audio.currentTime,.2);noiseGain.gain.setTargetAtTime(.008+Math.min(rpm/3000,.012),audio.currentTime,.2)}
-function project(x,z,y=0){z-=car.z; x-=car.x;let yaw=car.yaw,rx=x*Math.cos(yaw)-z*Math.sin(yaw),rz=x*Math.sin(yaw)+z*Math.cos(yaw);let scale=620/(rz+10);return {x:W/2+rx*scale,y:H*.55-(y+terrain(x,z+car.z))*scale,scale,depth:rz}}
-function poly(points,color){ctx.beginPath();points.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.closePath();ctx.fillStyle=color;ctx.fill()}
-function drawTerrain(){ctx.fillStyle='#c7c9bd';ctx.fillRect(0,0,W,H);let horizon=H*.33;ctx.fillStyle='#b9c9c5';ctx.fillRect(0,0,W,horizon); // layered distant ridges
-for(let i=0;i<8;i++){ctx.beginPath();ctx.moveTo(0,horizon+i*7);for(let x=0;x<=W;x+=40)ctx.lineTo(x,horizon+i*7+Math.sin(x*.008+i)*28+Math.cos(x*.015)*14);ctx.lineTo(W,H);ctx.lineTo(0,H);ctx.closePath();ctx.fillStyle=['#9eafb1','#aebbb9','#c1c5bb','#d1d0c2'][i%4];ctx.fill();}
-let rows=26,cols=30;for(let r=rows;r>=0;r--){let z=4+r*r*.62;for(let c=0;c<cols;c++){let x=(c-cols/2)*2.4;let z2=z+Math.random()*0.0001;let p1=project(x,z2),p2=project(x+2.4,z2),p3=project(x+2.4,z2+Math.max(1,z*.07)),p4=project(x,z2+Math.max(1,z*.07));let shade=rand(Math.floor(x*3+z*2));poly([p1,p2,p3,p4],shade>.72?'#c4c3b7':shade>.35?'#d4d0c3':'#b8b9ad');}}
-function drawRock(o){let p=project(o.x,o.z);if(p.depth<3||p.depth>150)return;let s=o.size*p.scale*.8;if(s<2)return;ctx.fillStyle='#68777d';ctx.beginPath();ctx.moveTo(p.x-s*.8,p.y);ctx.lineTo(p.x-s*.4,p.y-s*.6);ctx.lineTo(p.x+s*.5,p.y-s*.65);ctx.lineTo(p.x+s,p.y-s*.1);ctx.lineTo(p.x+s*.7,p.y+s*.45);ctx.lineTo(p.x-s*.6,p.y+s*.5);ctx.closePath();ctx.fill();ctx.fillStyle='#859398';ctx.beginPath();ctx.moveTo(p.x-s*.4,p.y-s*.6);ctx.lineTo(p.x+s*.5,p.y-s*.65);ctx.lineTo(p.x+s*.25,p.y-s*.1);ctx.lineTo(p.x-s*.65,p.y+s*.05);ctx.fill();}
-function drawTree(o){let p=project(o.x,o.z);if(p.depth<3||p.depth>180)return;let s=o.size*p.scale*2;if(s<2)return;ctx.fillStyle='#836f5c';ctx.fillRect(p.x-s*.12,p.y-s*.35,s*.24,s*.9);for(let k=0;k<3;k++){ctx.fillStyle=['#397c68','#438b72','#55a17e'][k];ctx.beginPath();ctx.moveTo(p.x,p.y-s*(1.9-k*.5));ctx.lineTo(p.x-s*(.85-k*.2),p.y-s*(.25-k*.15));ctx.lineTo(p.x+s*(.85-k*.2),p.y-s*(.25-k*.15));ctx.closePath();ctx.fill();}}
-function drawBush(o){let p=project(o.x,o.z);if(p.depth<3||p.depth>140)return;let s=o.size*p.scale;if(s<2)return;ctx.fillStyle='#668d73';ctx.beginPath();ctx.arc(p.x,p.y,s,0,Math.PI*2);ctx.arc(p.x+s*.65,p.y+s*.3,s*.7,0,Math.PI*2);ctx.fill()}
-function drawCar(){let x=W*.5,y=H*.68,s=Math.min(W,H)*.003;ctx.save();ctx.translate(x,y);ctx.rotate(-car.roll*.02); // shadow
-ctx.fillStyle='rgba(30,30,30,.25)';ctx.beginPath();ctx.ellipse(0,12,100*s*2,25*s*2,0,0,Math.PI*2);ctx.fill();
-ctx.scale(s*2.6,s*2.6); // unit-ish scale
-// wheels
-for(let xx of [-42,42])for(let yy of [-42,42]){ctx.fillStyle='#222';ctx.beginPath();ctx.roundRect(xx-12,yy-18,24,36,8);ctx.fill();ctx.fillStyle='#aab2b5';ctx.beginPath();ctx.arc(xx,yy,9,0,Math.PI*2);ctx.fill();ctx.fillStyle='#3a4247';ctx.beginPath();ctx.arc(xx,yy,4,0,Math.PI*2);ctx.fill();}
-ctx.fillStyle='#c7d4db';ctx.strokeStyle='#52636c';ctx.lineWidth=3;ctx.beginPath();ctx.roundRect(-54,-57,108,104,12);ctx.fill();ctx.stroke();
-// body top/cab
-ctx.fillStyle='#b8cbd2';ctx.beginPath();ctx.roundRect(-44,-72,88,60,8);ctx.fill();ctx.stroke();
-// glass
-ctx.fillStyle='#426d91';ctx.beginPath();ctx.roundRect(-34,-65,68,42,5);ctx.fill();
-// grille/bumper
-ctx.fillStyle='#5a6770';ctx.fillRect(-50,38,100,10);ctx.fillStyle='#222';ctx.fillRect(-22,34,44,7);
-// roof bars and rack
-ctx.fillStyle='#252b30';ctx.fillRect(-48,-77,96,5);ctx.fillRect(-45,-79,4,20);ctx.fillRect(41,-79,4,20);
-// headlights
-ctx.fillStyle='#ffdf9c';ctx.fillRect(-45,24,12,9);ctx.fillRect(33,24,12,9);
-ctx.restore();}
-function render(){drawTerrain();let items=[...rocks.map(o=>({o,fn:drawRock})),...trees.map(o=>({o,fn:drawTree})),...bushes.map(o=>({o,fn:drawBush}))].sort((a,b)=>b.o.z-car.z-(a.o.z-car.z));for(let item of items)item.fn(item.o);drawCar(); }
-function update(dt){if(!started||paused)return;dt=Math.min(dt,.04);session+=dt;worldTime+=dt;
-let gas=keys.w||keys.ArrowUp||touch.gas,br=keys.s||keys.ArrowDown||touch.brake,left=keys.a||keys.ArrowLeft||touch.left,right=keys.d||keys.ArrowRight||touch.right;
-if(gas&&car.fuel>0)car.v+=22*dt;if(br)car.v-=32*dt;car.v*=Math.pow(.985,dt*60);if(keys.Space)car.v*=Math.pow(.9,dt*60);car.v=Math.max(-12,Math.min(58,car.v));
-let steer=(right?1:0)-(left?1:0);car.yaw+=steer*dt*(.55+Math.abs(car.v)*.025)*Math.sign(car.v||1);car.x+=Math.sin(car.yaw)*car.v*dt;car.z+=Math.cos(car.yaw)*car.v*dt;
-car.dist+=Math.max(car.v,0)*dt/1000;car.fuel=Math.max(0,car.fuel-(gas?dt*.025:dt*.004));let rough=Math.abs(terrain(car.x,car.z)-terrain(car.x+Math.sin(car.yaw),car.z+Math.cos(car.yaw)));car.roll+=(steer*car.v*.09-car.roll)*dt*3;car.pitch+=(gas?1:-br?-.8:0-car.pitch)*dt*2;
-for(let o of rocks){if(Math.abs(o.z-car.z)<1.2&&Math.abs(o.x-car.x)<1.5){car.v*=.8;car.damage=Math.min(100,car.damage+dt*5);}}
-}
-function loop(t){let dt=(t-last)/1000||0;last=t;update(dt);render();sounds();document.getElementById('speed').innerHTML=Math.round(Math.abs(car.v)*3.6)+' <small>km/h</small>';document.getElementById('roll').textContent=Math.round(car.roll*5)+'°';document.getElementById('pitch').textContent=Math.round(car.pitch*3)+'°';document.getElementById('damage').textContent=Math.round(car.damage)+'%';document.getElementById('damagebar').style.width=car.damage+'%';document.getElementById('fuel').textContent=Math.round(car.fuel)+'%';document.getElementById('fuelbar').style.width=car.fuel+'%';document.getElementById('distance').textContent=(car.dist).toFixed(2)+' km';document.getElementById('elapsed').textContent=Math.floor(session/60)+':'+String(Math.floor(session%60)).padStart(2,'0');document.getElementById('gear').textContent=car.v>0?'HIGH RANGE':car.v<0?'REVERSE':'LOW RANGE';requestAnimationFrame(loop)}
-requestAnimationFrame(loop);
-addEventListener('keydown',e=>{keys[e.key.toLowerCase()]=true;keys[e.key]=true;if(e.key==='r'||e.key==='R')reset();if(e.key===' ')e.preventDefault()});addEventListener('keyup',e=>{keys[e.key.toLowerCase()]=false;keys[e.key]=false});
-function hold(id,k){let el=document.getElementById(id);el.addEventListener('pointerdown',e=>{e.preventDefault();touch[k]=true;el.setPointerCapture(e.pointerId});['pointerup','pointercancel','pointerleave'].forEach(ev=>el.addEventListener(ev,()=>touch[k]=false))}
-hold('gas','gas');hold('brake','brake');hold('turnL','left');hold('turnR','right');
-document.getElementById('begin').onclick=()=>{audioStart();started=true;document.getElementById('start').style.display='none'};
-document.getElementById('pause').onclick=()=>{paused=!paused;document.getElementById('pause').textContent=paused?'Resume':'Pause'};
+function seeded(n){let v=Math.sin(n*127.1+311.7)*43758.5453;return v-Math.floor(v)}
+let trees=[],rocks=[],shrubs=[];for(let i=0;i<180;i++){let z=seeded(i+8)*500+15,x=(seeded(i+928)*2-1)*25;if(Math.abs(x)>5)trees.push({x,z,s:1+seeded(i+45)*2})}for(let i=0;i<120;i++)rocks.push({x:(seeded(i+80)*2-1)*24,z:seeded(i+200)*480+10,s:.5+seeded(i+300)*1.5});for(let i=0;i<90;i++)shrubs.push({x:(seeded(i+40)*2-1)*24,z:seeded(i+700)*470+10,s:.4+seeded(i+900)*1.2});
+function height(x,z){return Math.sin(z*.075+x*.22)*.45+Math.sin(x*.4)*.22+Math.sin(z*.22)*.18}
+function project(x,z){let dx=x-car.x,dz=z-car.z,yaw=car.yaw,rx=dx*Math.cos(yaw)-dz*Math.sin(yaw),rz=dx*Math.sin(yaw)+dz*Math.cos(yaw);let scale=600/(rz+12);return {x:W/2+rx*scale,y:H*.54-height(x,z)*scale,scale,depth:rz}}
+function polygon(points,color){ctx.beginPath();points.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.closePath();ctx.fillStyle=color;ctx.fill()}
+function terrain(){ctx.fillStyle='#b9c9c4';ctx.fillRect(0,0,W,H);let hor=H*.34;for(let i=0;i<5;i++){ctx.beginPath();ctx.moveTo(0,hor+i*9);for(let x=0;x<=W;x+=35)ctx.lineTo(x,hor+i*9+Math.sin(x*.008+i)*25+Math.cos(x*.013)*13);ctx.lineTo(W,H);ctx.lineTo(0,H);ctx.closePath();ctx.fillStyle=['#8ea5a7','#a5b5b3','#bac1b9','#c8c8bb','#d1cfc2'][i];ctx.fill()}for(let r=24;r>=0;r--){let z=5+r*r*.65;for(let c=0;c<28;c++){let x=(c-14)*2.6;let p1=project(x,z),p2=project(x+2.6,z),p3=project(x+2.6,z+Math.max(1,z*.065)),p4=project(x,z+Math.max(1,z*.065));let n=seeded(Math.floor(x*3+z*2));polygon([p1,p2,p3,p4],n>.65?'#c5c4b8':n>.3?'#d2d0c3':'#b8b9ad')}}}
+function drawRock(o){let p=project(o.x,o.z);if(p.depth<3||p.depth>140)return;let s=o.s*p.scale;if(s<2)return;ctx.fillStyle='#64747b';ctx.beginPath();ctx.moveTo(p.x-s,p.y);ctx.lineTo(p.x-s*.5,p.y-s*.7);ctx.lineTo(p.x+s*.5,p.y-s*.6);ctx.lineTo(p.x+s,p.y-s*.1);ctx.lineTo(p.x+s*.6,p.y+s*.4);ctx.lineTo(p.x-s*.5,p.y+s*.5);ctx.closePath();ctx.fill();ctx.fillStyle='#84949a';ctx.beginPath();ctx.moveTo(p.x-s*.5,p.y-s*.7);ctx.lineTo(p.x+s*.5,p.y-s*.6);ctx.lineTo(p.x+s*.2,p.y);ctx.lineTo(p.x-s*.7,p.y+s*.1);ctx.fill()}
+function drawTree(o){let p=project(o.x,o.z);if(p.depth<3||p.depth>180)return;let s=o.s*p.scale;if(s<2)return;ctx.fillStyle='#776451';ctx.fillRect(p.x-s*.12,p.y-s*.3,s*.24,s*.8);for(let k=0;k<3;k++){ctx.fillStyle=['#397966','#438a70','#559d79'][k];ctx.beginPath();ctx.moveTo(p.x,p.y-s*(2-k*.45));ctx.lineTo(p.x-s*(.8-k*.15),p.y-s*(.3-k*.1));ctx.lineTo(p.x+s*(.8-k*.15),p.y-s*(.3-k*.1));ctx.closePath();ctx.fill()}}
+function drawShrub(o){let p=project(o.x,o.z);if(p.depth<3||p.depth>120)return;let s=o.s*p.scale;if(s<2)return;ctx.fillStyle='#6d9077';ctx.beginPath();ctx.arc(p.x,p.y,s,0,Math.PI*2);ctx.arc(p.x+s*.6,p.y+s*.2,s*.65,0,Math.PI*2);ctx.fill()}
+function drawCar(){ctx.save();ctx.translate(W*.5,H*.69);ctx.rotate(-car.roll*.025);let scale=Math.min(W,H)*.003;ctx.scale(scale*2.5,scale*2.5);ctx.fillStyle='#222';for(let x of [-42,42])for(let y of [-40,40]){ctx.beginPath();ctx.roundRect(x-11,y-17,22,34,7);ctx.fill();ctx.fillStyle='#aab3b5';ctx.beginPath();ctx.arc(x,y,8,0,6.28);ctx.fill();ctx.fillStyle='#222'}ctx.fillStyle='#c6d3d8';ctx.strokeStyle='#53646b';ctx.lineWidth=3;ctx.beginPath();ctx.roundRect(-53,-55,106,100,12);ctx.fill();ctx.stroke();ctx.fillStyle='#b4c8d1';ctx.beginPath();ctx.roundRect(-43,-71,86,58,8);ctx.fill();ctx.stroke();ctx.fillStyle='#426c8a';ctx.beginPath();ctx.roundRect(-34,-64,68,40,5);ctx.fill();ctx.fillStyle='#252b30';ctx.fillRect(-47,-77,94,5);ctx.fillRect(-43,-79,4,18);ctx.fillRect(39,-79,4,18);ctx.fillStyle='#555f66';ctx.fillRect(-49,37,98,10);ctx.fillStyle='#f8df9a';ctx.fillRect(-43,23,12,9);ctx.fillRect(31,23,12,9);ctx.restore()}
+function render(){terrain();let objs=[...rocks.map(o=>({o,f:drawRock})),...trees.map(o=>({o,f:drawTree})),...shrubs.map(o=>({o,f:drawShrub}))].sort((a,b)=>b.o.z-a.o.z);for(let q of objs)q.f(q.o);drawCar()}
+function initAudio(){if(audio)return;audio=new (window.AudioContext||window.webkitAudioContext)();audio.resume();osc=audio.createOscillator();osc.type='triangle';filter=audio.createBiquadFilter();filter.type='lowpass';filter.frequency.value=250;gain=audio.createGain();gain.gain.value=0;osc.connect(filter);filter.connect(gain);gain.connect(audio.destination);osc.start()}
+function audioUpdate(){if(!audio)return;osc.frequency.setTargetAtTime(55+Math.abs(car.v)*2.4+(keys.w?12:0),audio.currentTime,.12);filter.frequency.setTargetAtTime(180+Math.abs(car.v)*6,audio.currentTime,.15);gain.gain.setTargetAtTime(started&&!paused?.035:0,audio.currentTime,.15)}
+function reset(){car={x:0,z:0,v:0,yaw:0,roll:0,pitch:0,damage:0,fuel:100,dist:0};elapsed=0}
+function update(dt){if(!started||paused)return;dt=Math.min(dt,.05);elapsed+=dt;let go=keys.w||keys.ArrowUp||touch.gas,br=keys.s||keys.ArrowDown||touch.brake,L=keys.a||keys.ArrowLeft||touch.left,R=keys.d||keys.ArrowRight||touch.right;if(go&&car.fuel>0)car.v+=18*dt;if(br)car.v-=26*dt;if(keys[' ']||keys.Space)car.v*=Math.pow(.82,dt*60);car.v*=Math.pow(.99,dt*60);car.v=Math.max(-10,Math.min(42,car.v));let steer=(R?1:0)-(L?1:0);car.yaw+=steer*dt*(.65+Math.abs(car.v)*.025)*Math.sign(car.v||1);car.x+=Math.sin(car.yaw)*car.v*dt;car.z+=Math.cos(car.yaw)*car.v*dt;car.dist+=Math.max(0,car.v)*dt/1000;car.fuel=Math.max(0,car.fuel-(go?dt*.02:dt*.002));car.roll+=(steer*car.v*.06-car.roll)*dt*3;car.pitch+=(go?.4:br?-.3:0-car.pitch)*dt*2;for(let o of rocks){if(Math.abs(o.z-car.z)<1.1&&Math.abs(o.x-car.x)<1.4){car.v*=.82;car.damage=Math.min(100,car.damage+dt*4)}}}
+function frame(t){let dt=(t-last)/1000||0;last=t;update(dt);render();audioUpdate();document.getElementById('speed').innerHTML=Math.round(Math.abs(car.v)*3.6)+' <small>km/h</small>';document.getElementById('roll').textContent=Math.round(car.roll*5)+'°';document.getElementById('pitch').textContent=Math.round(car.pitch*3)+'°';document.getElementById('damage').textContent=Math.round(car.damage)+'%';document.getElementById('damageBar').style.width=car.damage+'%';document.getElementById('fuel').textContent=Math.round(car.fuel)+'%';document.getElementById('fuelBar').style.width=car.fuel+'%';document.getElementById('dist').textContent=car.dist.toFixed(2);document.getElementById('time').textContent=Math.floor(elapsed/60)+':'+String(Math.floor(elapsed%60)).padStart(2,'0');document.getElementById('gear').textContent=car.v<-.5?'REVERSE':car.v>2?'HIGH RANGE':'LOW RANGE';requestAnimationFrame(frame)}
+requestAnimationFrame(frame);
+addEventListener('keydown',e=>{keys[e.key]=true;keys[e.key.toLowerCase()]=true;if(e.key.toLowerCase()==='r')reset();if(e.key===' ')e.preventDefault()});addEventListener('keyup',e=>{keys[e.key]=false;keys[e.key.toLowerCase()]=false});
+function bind(id,key){let el=document.getElementById(id);el.addEventListener('pointerdown',e=>{e.preventDefault();touch[key]=true;el.setPointerCapture(e.pointerId)});['pointerup','pointercancel','lostpointercapture'].forEach(ev=>el.addEventListener(ev,()=>touch[key]=false))}
+bind('gasBtn','gas');bind('brakeBtn','brake');bind('leftBtn','left');bind('rightBtn','right');
+document.getElementById('startBtn').addEventListener('click',()=>{initAudio();started=true;document.getElementById('start').style.display='none'});
+document.getElementById('pause').addEventListener('click',()=>{paused=!paused;document.getElementById('pause').textContent=paused?'Resume':'Pause'});
+})();
 </script>
-</body></html>
+</body>
+</html>
