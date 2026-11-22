@@ -2,336 +2,103 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shiroworks Garage</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;700&family=Rajdhani:wght@600&display=swap" rel="stylesheet">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1,user-scalable=no">
+<title>Shiroworks Offroad</title>
 <style>
-* { box-sizing: border-box; }
-
-body {
-    margin: 0;
-    font-family: "Zen Kaku Gothic New", Arial, sans-serif;
-    background-color: #0a1f24;
-    color: #f2f2f2;
-    overflow-x: hidden;
-}
-
-header {
-    position: sticky;
-    top: 0;
-    background-color: rgba(10,31,36,0.95);
-    padding: 15px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-}
-
-.logo-wrap {
-    position: relative;
-}
-
-.sun {
-    position: absolute;
-    width: 60px;
-    height: 60px;
-    background: radial-gradient(circle, #ffb703, #ff4d6d);
-    border-radius: 50%;
-    top: -15px;
-    left: -20px;
-    z-index: -1;
-}
-
-header h1 {
-    margin: 0;
-    font-family: "Rajdhani", sans-serif;
-    color: #ffb703;
-    letter-spacing: 2px;
-    font-size: 24px;
-}
-
-nav {
-    display: flex;
-    gap: 15px;
-}
-
-nav a {
-    color: #ff4d6d;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.hero {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 30px;
-    background: linear-gradient(135deg, #0a1f24, #ff4d6d, #ffb703);
-}
-
-.hero h2 {
-    font-size: 40px;
-    font-family: "Rajdhani", sans-serif;
-    color: #0a1f24;
-}
-
-.hero p {
-    max-width: 600px;
-    color: #0a1f24;
-}
-
-.hero button {
-    margin-top: 20px;
-    padding: 12px 26px;
-    border: none;
-    border-radius: 30px;
-    background: #0a1f24;
-    color: #ffb703;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.section {
-    padding: 50px 15px;
-    max-width: 1100px;
-    margin: auto;
-}
-
-.section h2 {
-    text-align: center;
-    color: #ffb703;
-    font-family: "Rajdhani", sans-serif;
-    letter-spacing: 2px;
-}
-
-.services {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px;
-}
-
-.card {
-    background: linear-gradient(135deg, #102a2f, #1a3f45);
-    padding: 20px;
-    border-radius: 14px;
-    transition: transform 0.2s, background 0.3s;
-}
-
-.card:hover {
-    background: linear-gradient(135deg, #ff4d6d, #ffb703);
-    transform: translateY(-5px);
-}
-
-.jp {
-    font-size: 11px;
-    letter-spacing: 2px;
-    color: #ffb703;
-}
-
-.card h3 {
-    color: #ff4d6d;
-    font-family: "Rajdhani", sans-serif;
-}
-
-.card:hover h3,
-.card:hover p,
-.card:hover .jp {
-    color: #0a1f24;
-}
-
-.about-box, .contact-box div {
-    background-color: #102a2f;
-    padding: 25px;
-    border-radius: 14px;
-    text-align: center;
-}
-
-.contact-box {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-}
-
-footer {
-    background-color: #061417;
-    text-align: center;
-    padding: 15px;
-    color: #ff4d6d;
-}
-
-/* Petals */
-.petal {
-    position: fixed;
-    top: -50px;
-    width: 10px;
-    height: 10px;
-    background: radial-gradient(circle, #ffd1dc, #ff4d6d);
-    border-radius: 50%;
-    animation: fall linear infinite;
-    opacity: 0.6;
-}
-
-@keyframes fall {
-    0% { transform: translateY(0) rotate(0deg); }
-    100% { transform: translateY(110vh) rotate(360deg); }
-}
-
-/* FORM */
-.form-overlay {
-    position: fixed;
-    top: 0;
-    right: -100%;
-    width: 100%;
-    height: 100%;
-    background: rgba(10,31,36,0.95);
-    display: flex;
-    justify-content: flex-end;
-    transition: 0.4s;
-    z-index: 20;
-}
-
-.form-overlay.active {
-    right: 0;
-}
-
-.form-box {
-    width: 100%;
-    max-width: 400px;
-    background: #102a2f;
-    padding: 30px;
-}
-
-.form-box h2 {
-    color: #ffb703;
-}
-
-.form-box input,
-.form-box textarea {
-    width: 100%;
-    margin-bottom: 12px;
-    padding: 10px;
-    border-radius: 6px;
-    border: none;
-}
-
-.form-box button {
-    padding: 10px 18px;
-    border: none;
-    border-radius: 6px;
-    margin-right: 6px;
-    cursor: pointer;
-}
-
-/* Mobile */
-@media (max-width: 768px) {
-    header {
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    .hero h2 {
-        font-size: 30px;
-    }
-
-    .contact-box {
-        grid-template-columns: 1fr;
-    }
-}
-
-@media (max-width: 480px) {
-    header h1 {
-        font-size: 20px;
-    }
-
-    .hero h2 {
-        font-size: 24px;
-    }
-}
+*{box-sizing:border-box}body{margin:0;background:#20282c;color:#fff;font-family:Arial,sans-serif;overflow:hidden}
+#game{display:block;width:100vw;height:100vh;background:#b9c8c5}
+#hud{position:fixed;inset:0;pointer-events:none}
+.panel{background:rgba(37,32,28,.72);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.12);border-radius:18px;color:white}
+#top{position:absolute;top:14px;left:50%;transform:translateX(-50%);padding:12px 18px;display:flex;gap:24px;align-items:center;min-width:250px;justify-content:center;font-size:12px}
+#top strong{font-size:16px;display:block}
+#left{position:absolute;bottom:16px;left:16px;padding:12px;width:230px;font-size:11px}
+#right{position:absolute;bottom:16px;right:16px;padding:14px;width:245px}
+.metric{display:flex;justify-content:space-between;align-items:center;margin:7px 0}
+.gauge{height:5px;background:#655d52;border-radius:9px;overflow:hidden;width:100%;margin-top:3px}
+.gauge span{display:block;height:100%;background:#f0b04b;width:30%}
+#speed{font-size:42px;font-weight:bold;text-align:center;font-family:Arial,sans-serif}
+#speed small{font-size:13px}
+#gear{font-size:12px;text-align:center;color:#f0b04b;font-weight:bold}
+#buttons{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);display:flex;gap:12px;pointer-events:auto}
+.ctrl{width:66px;height:66px;border-radius:50%;background:rgba(30,33,35,.5);border:1px solid rgba(255,255,255,.25);color:#fff;font-size:20px;touch-action:none}
+.ctrl:active{background:rgba(241,174,72,.65)}
+#hint{position:absolute;top:86px;left:50%;transform:translateX(-50%);font-size:12px;text-shadow:0 1px 3px #333;opacity:.8}
+#start{position:absolute;inset:0;background:rgba(20,29,33,.38);display:flex;align-items:center;justify-content:center;pointer-events:auto}
+#startbox{max-width:460px;margin:20px;padding:28px;text-align:center}
+#startbox h1{margin:0 0 8px;color:#f2b653;letter-spacing:2px}
+#startbox p{line-height:1.5;color:#eee}
+#startbox button{border:0;border-radius:30px;padding:14px 32px;background:#f2b653;color:#24282b;font-weight:bold;font-size:16px}
+#pause{position:absolute;top:12px;right:12px;pointer-events:auto;border:0;border-radius:20px;padding:9px 14px;background:rgba(30,33,35,.6);color:white}
+@media(max-width:700px){#left{width:170px;bottom:100px;left:8px}#right{width:170px;right:8px;bottom:100px}#speed{font-size:32px}#top{top:8px;gap:12px;padding:10px}#hint{top:74px} .ctrl{width:60px;height:60px}}
 </style>
 </head>
-
 <body>
-
-<div class="petal" style="left:15%; animation-duration:14s;"></div>
-<div class="petal" style="left:35%; animation-duration:18s;"></div>
-<div class="petal" style="left:55%; animation-duration:12s;"></div>
-<div class="petal" style="left:75%; animation-duration:20s;"></div>
-
-<header>
-    <div class="logo-wrap">
-        <div class="sun"></div>
-        <h1>Shiroworks Garage</h1>
-    </div>
-    <nav>
-        <a href="#services">Services</a>
-        <a href="#about">About</a>
-        <a href="#contact">Contact</a>
-    </nav>
-</header>
-
-<section class="hero">
-    <div>
-        <h2>Street Power. Track Precision.</h2>
-        <p>Performance tuning inspired by Japanese street culture.</p>
-        <button onclick="openForm()">Schedule a Session</button>
-    </div>
-</section>
-
-<section class="section" id="services">
-<h2>Our Services</h2>
-<div class="services">
-<div class="card"><span class="jp">Kaizen</span><h3>ECU Tuning</h3><p>Precision engine maps.</p></div>
-<div class="card"><span class="jp">Shinkou</span><h3>Forced Induction</h3><p>Turbo and supercharger installs.</p></div>
-<div class="card"><span class="jp">Seigyo</span><h3>Handling</h3><p>Suspension and brake upgrades.</p></div>
-<div class="card"><span class="jp">Takumi</span><h3>Fabrication</h3><p>Custom exhaust and parts.</p></div>
+<canvas id="game"></canvas>
+<div id="hud">
+<div id="top" class="panel"><div><strong id="clock">16:17</strong>FIELD TIME</div><div><strong id="elapsed">0:00</strong>RUN TIME</div><div><strong id="distance">0.0 km</strong>TRAVELLED</div></div>
+<div id="hint">WASD / arrows to drive · Space handbrake · R reset</div>
+<div id="left" class="panel"><div class="metric"><span>ROLL</span><strong id="roll">0°</strong></div><div class="metric"><span>PITCH</span><strong id="pitch">0°</strong></div><div class="metric"><span>DRIVE</span><strong>4WD</strong></div><div class="metric"><span>GROUND</span><strong id="ground">TRAIL</strong></div><div class="metric"><span>GRIP</span><strong id="grip">84%</strong></div></div>
+<div id="right" class="panel"><div class="metric"><span>DAMAGE</span><strong id="damage">0%</strong></div><div class="gauge"><span id="damagebar"></span></div><div class="metric"><span>FUEL</span><strong id="fuel">100%</strong></div><div class="gauge"><span id="fuelbar"></span></div><div id="speed">0 <small>km/h</small></div><div id="gear">LOW RANGE</div><div class="metric"><span>ENGINE</span><strong id="engine">READY</strong></div></div>
+<button id="pause">Pause</button>
+<div id="buttons"><button class="ctrl" id="turnL">◀</button><button class="ctrl" id="brake">▼</button><button class="ctrl" id="gas">▲</button><button class="ctrl" id="turnR">▶</button></div>
+<div id="start"><div id="startbox" class="panel"><h1>SHIROWORKS OFFROAD</h1><p>Take your rig across a quiet low-poly wilderness. Crawl over rocks, weave through trees, and find your own trail. Soft engine and ambient sounds.</p><p>Keyboard: WASD or arrows · Space brake · R reset</p><button id="begin">START DRIVE</button></div></div>
 </div>
-</section>
-
-<section class="section" id="about">
-<h2>About Us</h2>
-<div class="about-box">
-<p>Shiroworks Garage blends performance engineering with Japanese street craftsmanship.</p>
-</div>
-</section>
-
-<section class="section" id="contact">
-<h2>Contact</h2>
-<div class="contact-box">
-<div><p>Email</p><strong>shiroworksgarage@gmail.com</strong></div>
-
-</div>
-</section>
-
-<footer>
-<p>2026 Shiroworks Garage</p>
-</footer>
-
-<div id="bookingForm" class="form-overlay">
-  <div class="form-box">
-    <h2>Schedule a Session</h2>
-    <form action="https://api.web3forms.com/submit" method="POST">
-      <input type="hidden" name="access_key" value="4792c267-b2bc-41d2-800e-13aa704dee07">
-      <input type="text" name="name" placeholder="Your Name" required>
-      <input type="email" name="email" placeholder="Your Email" required>
-      <textarea name="message" placeholder="What work do you want done?" required></textarea>
-      <button type="submit">Submit</button>
-      <button type="button" onclick="closeForm()">Cancel</button>
-    </form>
-  </div>
-</div>
-
 <script>
-function openForm() {
-    document.getElementById("bookingForm").classList.add("active");
+const canvas=document.getElementById('game'),ctx=canvas.getContext('2d');
+let W,H,dpr,keys={},touch={},started=false,paused=false;
+function resize(){dpr=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;canvas.width=W*dpr;canvas.height=H*dpr;canvas.style.width=W+'px';canvas.style.height=H+'px';ctx.setTransform(dpr,0,0,dpr,0,0)}
+addEventListener('resize',resize);resize();
+let car={x:0,z:0,v:0,yaw:0,roll:0,pitch:0,damage:0,fuel:100,dist:0};
+let worldTime=0,session=0,last=0,particles=[],rocks=[],trees=[],bushes=[];
+function rand(seed){let x=Math.sin(seed*127.1+311.7)*43758.5453;return x-Math.floor(x)}
+for(let i=0;i<230;i++){let z=rand(i+8)*420+12,x=(rand(i+928)*2-1)*24;if(Math.abs(x)>5)trees.push({x,z,size:1.2+rand(i+45)*2})}
+for(let i=0;i<160;i++){rocks.push({x:(rand(i+80)*2-1)*22,z:rand(i+200)*390+8,size:.3+rand(i+300)*1.7,shape:rand(i+4})}
+for(let i=0;i<100;i++){bushes.push({x:(rand(i+40)*2-1)*22,z:rand(i+700)*390+5,size:.5+rand(i+900)*1.2})}
+function terrain(x,z){return Math.sin(z*.075+x*.22)*.45+Math.sin(x*.4)*.22+Math.sin(z*.22)*.18}
+function reset(){car={x:0,z:0,v:0,yaw:0,roll:0,pitch:0,damage:0,fuel:100,dist:0};session=0}
+let audio,engineOsc,engineGain,filter,noiseGain;
+function audioStart(){if(audio)return;audio=new (window.AudioContext||window.webkitAudioContext)();audio.resume();engineOsc=audio.createOscillator();engineOsc.type='sawtooth';filter=audio.createBiquadFilter();filter.type='lowpass';filter.frequency.value=190;engineGain=audio.createGain();engineGain.gain.value=0;engineOsc.connect(filter);filter.connect(engineGain);engineGain.connect(audio.destination);engineOsc.start();
+let noise=audio.createBufferSource(),buf=audio.createBuffer(1,audio.sampleRate*2,audio.sampleRate),data=buf.getChannelData(0);for(let i=0;i<data.length;i++)data[i]=(Math.random()*2-1)*.1;noise.buffer=buf;noise.loop=true;let nf=audio.createBiquadFilter();nf.type='lowpass';nf.frequency.value=400;noiseGain=audio.createGain();noiseGain.gain.value=.015;noise.connect(nf);nf.connect(noiseGain);noiseGain.connect(audio.destination);noise.start();}
+function sounds(){if(!audio)return;let rpm=Math.abs(car.v);engineOsc.frequency.setTargetAtTime(48+rpm*2.7+(keys.w||keys.ArrowUp?12:0),audio.currentTime,.12);filter.frequency.setTargetAtTime(120+rpm*8,audio.currentTime,.2);engineGain.gain.setTargetAtTime(started&&!paused?.035+.025*Math.min(rpm/40,1):0,audio.currentTime,.2);noiseGain.gain.setTargetAtTime(.008+Math.min(rpm/3000,.012),audio.currentTime,.2)}
+function project(x,z,y=0){z-=car.z; x-=car.x;let yaw=car.yaw,rx=x*Math.cos(yaw)-z*Math.sin(yaw),rz=x*Math.sin(yaw)+z*Math.cos(yaw);let scale=620/(rz+10);return {x:W/2+rx*scale,y:H*.55-(y+terrain(x,z+car.z))*scale,scale,depth:rz}}
+function poly(points,color){ctx.beginPath();points.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.closePath();ctx.fillStyle=color;ctx.fill()}
+function drawTerrain(){ctx.fillStyle='#c7c9bd';ctx.fillRect(0,0,W,H);let horizon=H*.33;ctx.fillStyle='#b9c9c5';ctx.fillRect(0,0,W,horizon); // layered distant ridges
+for(let i=0;i<8;i++){ctx.beginPath();ctx.moveTo(0,horizon+i*7);for(let x=0;x<=W;x+=40)ctx.lineTo(x,horizon+i*7+Math.sin(x*.008+i)*28+Math.cos(x*.015)*14);ctx.lineTo(W,H);ctx.lineTo(0,H);ctx.closePath();ctx.fillStyle=['#9eafb1','#aebbb9','#c1c5bb','#d1d0c2'][i%4];ctx.fill();}
+let rows=26,cols=30;for(let r=rows;r>=0;r--){let z=4+r*r*.62;for(let c=0;c<cols;c++){let x=(c-cols/2)*2.4;let z2=z+Math.random()*0.0001;let p1=project(x,z2),p2=project(x+2.4,z2),p3=project(x+2.4,z2+Math.max(1,z*.07)),p4=project(x,z2+Math.max(1,z*.07));let shade=rand(Math.floor(x*3+z*2));poly([p1,p2,p3,p4],shade>.72?'#c4c3b7':shade>.35?'#d4d0c3':'#b8b9ad');}}
+function drawRock(o){let p=project(o.x,o.z);if(p.depth<3||p.depth>150)return;let s=o.size*p.scale*.8;if(s<2)return;ctx.fillStyle='#68777d';ctx.beginPath();ctx.moveTo(p.x-s*.8,p.y);ctx.lineTo(p.x-s*.4,p.y-s*.6);ctx.lineTo(p.x+s*.5,p.y-s*.65);ctx.lineTo(p.x+s,p.y-s*.1);ctx.lineTo(p.x+s*.7,p.y+s*.45);ctx.lineTo(p.x-s*.6,p.y+s*.5);ctx.closePath();ctx.fill();ctx.fillStyle='#859398';ctx.beginPath();ctx.moveTo(p.x-s*.4,p.y-s*.6);ctx.lineTo(p.x+s*.5,p.y-s*.65);ctx.lineTo(p.x+s*.25,p.y-s*.1);ctx.lineTo(p.x-s*.65,p.y+s*.05);ctx.fill();}
+function drawTree(o){let p=project(o.x,o.z);if(p.depth<3||p.depth>180)return;let s=o.size*p.scale*2;if(s<2)return;ctx.fillStyle='#836f5c';ctx.fillRect(p.x-s*.12,p.y-s*.35,s*.24,s*.9);for(let k=0;k<3;k++){ctx.fillStyle=['#397c68','#438b72','#55a17e'][k];ctx.beginPath();ctx.moveTo(p.x,p.y-s*(1.9-k*.5));ctx.lineTo(p.x-s*(.85-k*.2),p.y-s*(.25-k*.15));ctx.lineTo(p.x+s*(.85-k*.2),p.y-s*(.25-k*.15));ctx.closePath();ctx.fill();}}
+function drawBush(o){let p=project(o.x,o.z);if(p.depth<3||p.depth>140)return;let s=o.size*p.scale;if(s<2)return;ctx.fillStyle='#668d73';ctx.beginPath();ctx.arc(p.x,p.y,s,0,Math.PI*2);ctx.arc(p.x+s*.65,p.y+s*.3,s*.7,0,Math.PI*2);ctx.fill()}
+function drawCar(){let x=W*.5,y=H*.68,s=Math.min(W,H)*.003;ctx.save();ctx.translate(x,y);ctx.rotate(-car.roll*.02); // shadow
+ctx.fillStyle='rgba(30,30,30,.25)';ctx.beginPath();ctx.ellipse(0,12,100*s*2,25*s*2,0,0,Math.PI*2);ctx.fill();
+ctx.scale(s*2.6,s*2.6); // unit-ish scale
+// wheels
+for(let xx of [-42,42])for(let yy of [-42,42]){ctx.fillStyle='#222';ctx.beginPath();ctx.roundRect(xx-12,yy-18,24,36,8);ctx.fill();ctx.fillStyle='#aab2b5';ctx.beginPath();ctx.arc(xx,yy,9,0,Math.PI*2);ctx.fill();ctx.fillStyle='#3a4247';ctx.beginPath();ctx.arc(xx,yy,4,0,Math.PI*2);ctx.fill();}
+ctx.fillStyle='#c7d4db';ctx.strokeStyle='#52636c';ctx.lineWidth=3;ctx.beginPath();ctx.roundRect(-54,-57,108,104,12);ctx.fill();ctx.stroke();
+// body top/cab
+ctx.fillStyle='#b8cbd2';ctx.beginPath();ctx.roundRect(-44,-72,88,60,8);ctx.fill();ctx.stroke();
+// glass
+ctx.fillStyle='#426d91';ctx.beginPath();ctx.roundRect(-34,-65,68,42,5);ctx.fill();
+// grille/bumper
+ctx.fillStyle='#5a6770';ctx.fillRect(-50,38,100,10);ctx.fillStyle='#222';ctx.fillRect(-22,34,44,7);
+// roof bars and rack
+ctx.fillStyle='#252b30';ctx.fillRect(-48,-77,96,5);ctx.fillRect(-45,-79,4,20);ctx.fillRect(41,-79,4,20);
+// headlights
+ctx.fillStyle='#ffdf9c';ctx.fillRect(-45,24,12,9);ctx.fillRect(33,24,12,9);
+ctx.restore();}
+function render(){drawTerrain();let items=[...rocks.map(o=>({o,fn:drawRock})),...trees.map(o=>({o,fn:drawTree})),...bushes.map(o=>({o,fn:drawBush}))].sort((a,b)=>b.o.z-car.z-(a.o.z-car.z));for(let item of items)item.fn(item.o);drawCar(); }
+function update(dt){if(!started||paused)return;dt=Math.min(dt,.04);session+=dt;worldTime+=dt;
+let gas=keys.w||keys.ArrowUp||touch.gas,br=keys.s||keys.ArrowDown||touch.brake,left=keys.a||keys.ArrowLeft||touch.left,right=keys.d||keys.ArrowRight||touch.right;
+if(gas&&car.fuel>0)car.v+=22*dt;if(br)car.v-=32*dt;car.v*=Math.pow(.985,dt*60);if(keys.Space)car.v*=Math.pow(.9,dt*60);car.v=Math.max(-12,Math.min(58,car.v));
+let steer=(right?1:0)-(left?1:0);car.yaw+=steer*dt*(.55+Math.abs(car.v)*.025)*Math.sign(car.v||1);car.x+=Math.sin(car.yaw)*car.v*dt;car.z+=Math.cos(car.yaw)*car.v*dt;
+car.dist+=Math.max(car.v,0)*dt/1000;car.fuel=Math.max(0,car.fuel-(gas?dt*.025:dt*.004));let rough=Math.abs(terrain(car.x,car.z)-terrain(car.x+Math.sin(car.yaw),car.z+Math.cos(car.yaw)));car.roll+=(steer*car.v*.09-car.roll)*dt*3;car.pitch+=(gas?1:-br?-.8:0-car.pitch)*dt*2;
+for(let o of rocks){if(Math.abs(o.z-car.z)<1.2&&Math.abs(o.x-car.x)<1.5){car.v*=.8;car.damage=Math.min(100,car.damage+dt*5);}}
 }
-function closeForm() {
-    document.getElementById("bookingForm").classList.remove("active");
-}
+function loop(t){let dt=(t-last)/1000||0;last=t;update(dt);render();sounds();document.getElementById('speed').innerHTML=Math.round(Math.abs(car.v)*3.6)+' <small>km/h</small>';document.getElementById('roll').textContent=Math.round(car.roll*5)+'°';document.getElementById('pitch').textContent=Math.round(car.pitch*3)+'°';document.getElementById('damage').textContent=Math.round(car.damage)+'%';document.getElementById('damagebar').style.width=car.damage+'%';document.getElementById('fuel').textContent=Math.round(car.fuel)+'%';document.getElementById('fuelbar').style.width=car.fuel+'%';document.getElementById('distance').textContent=(car.dist).toFixed(2)+' km';document.getElementById('elapsed').textContent=Math.floor(session/60)+':'+String(Math.floor(session%60)).padStart(2,'0');document.getElementById('gear').textContent=car.v>0?'HIGH RANGE':car.v<0?'REVERSE':'LOW RANGE';requestAnimationFrame(loop)}
+requestAnimationFrame(loop);
+addEventListener('keydown',e=>{keys[e.key.toLowerCase()]=true;keys[e.key]=true;if(e.key==='r'||e.key==='R')reset();if(e.key===' ')e.preventDefault()});addEventListener('keyup',e=>{keys[e.key.toLowerCase()]=false;keys[e.key]=false});
+function hold(id,k){let el=document.getElementById(id);el.addEventListener('pointerdown',e=>{e.preventDefault();touch[k]=true;el.setPointerCapture(e.pointerId});['pointerup','pointercancel','pointerleave'].forEach(ev=>el.addEventListener(ev,()=>touch[k]=false))}
+hold('gas','gas');hold('brake','brake');hold('turnL','left');hold('turnR','right');
+document.getElementById('begin').onclick=()=>{audioStart();started=true;document.getElementById('start').style.display='none'};
+document.getElementById('pause').onclick=()=>{paused=!paused;document.getElementById('pause').textContent=paused?'Resume':'Pause'};
 </script>
-
-</body>
-</html>
+</body></html>
