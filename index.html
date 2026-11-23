@@ -15,12 +15,12 @@ canvas{position:fixed;inset:0;width:100%;height:100%}
 #L{left:10px}#Rr{right:10px;text-align:right}
 .bar{height:7px;background:#ffffff22;border-radius:5px;overflow:hidden;margin:3px 0 8px}.bar i{display:block;height:100%;width:100%;border-radius:5px}
 #spd{font-size:30px;font-weight:800}#spd small{font-size:11px;opacity:.7}
+#cash{color:#8fd9a6;font-weight:800;font-size:13px;margin-top:2px}
 #toast{position:absolute;top:30%;width:100%;text-align:center;font-size:26px;font-weight:900;color:var(--gold);text-shadow:0 3px 8px #000a;opacity:0;transition:opacity .25s}
 #ctl{position:absolute;bottom:calc(env(safe-area-inset-bottom,0px) + 14px);left:0;right:0;display:flex;justify-content:space-between;padding:0 10px;pointer-events:none}
 .g{display:flex;gap:8px;align-items:flex-end}.c.gas{width:74px;height:74px;background:#4f8f6acc;border-color:#9fe0b4}
 .c{pointer-events:auto;width:62px;height:62px;border-radius:50%;border:1px solid #fff6;background:#1c2220aa;color:#fff;font-size:22px;font-weight:700;touch-action:none;backdrop-filter:blur(6px)}
 .c small{display:block;font-size:9px;letter-spacing:1px}.c.on{background:#e5b15bcc;color:#222}
-#nit{background:#e5b15b33;border-color:var(--gold)}
 #pause,#fin{position:absolute;top:calc(env(safe-area-inset-top,0px) + 92px);right:10px;pointer-events:auto;border:0;border-radius:16px;padding:7px 12px;background:#1c2220aa;color:#fff;font-size:11px}
 .ov{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#18252788;z-index:5}
 .ov.h{display:none}.bx{padding:26px 24px;text-align:center;max-width:380px;margin:16px}
@@ -36,14 +36,14 @@ canvas{position:fixed;inset:0;width:100%;height:100%}
 <div id="hud">
  <div id="top" class="pn"><div id="score">0</div><div id="sub"><span id="bio"></span> · BEST <span id="best">0</span></div></div>
  <div id="L" class="side pn">FUEL<div class="bar"><i id="fb" style="background:#e5b15b"></i></div>DAMAGE<div class="bar" style="height:3px"><i id="db" style="background:#d9695f;width:0"></i></div>BOOST <span id="bt">—</span><div class="bar" style="margin:3px 0 0"><i id="nb" style="background:#6fc3d9;width:0"></i></div></div>
- <div id="Rr" class="side pn"><div id="spd">0 <small>km/h</small></div><div id="km">0.00 km</div></div>
+ <div id="Rr" class="side pn"><div id="spd">0 <small>km/h</small></div><div id="km">0.00 km</div><div id="cash">$0</div></div>
  <button id="pause">PAUSE</button><button id="fin">FINISH RUN</button>
  <div id="toast"></div>
  <div id="sh"><button class="c" id="su">+</button><button class="c" id="sd">−</button></div><div id="ctl"><div class="g"><button class="c" id="bl">◀</button><button class="c" id="br">▶</button></div><div class="g"><button class="c" id="bb">▼<small>BRAKE</small></button><button class="c gas" id="gas">▲<small>GAS</small></button></div></div>
 </div>
 <div id="start" class="ov"><div class="bx pn"><h1>SHIROWORKS<br>OFFROAD</h1>
 <div id="mny"></div><button id="tr" style="padding:6px 14px;font-size:11px;margin:2px 0 0"></button><div class="tabs"><button data-t="0">CARS</button><button data-t="1">ENGINES</button><button data-t="2">PARTS</button></div><div id="lst"></div>
-<p style="font-size:11px;opacity:.7">Hold ▲ GAS · ◀ ▶ steer · ▼ brake · +/− shift<br>Keyboard: W gas, A/D steer, S brake, E/Q shift<br>Earn money from distance &amp; coins</p><button id="go">START DRIVE</button><br><button id="gc" style="display:none;background:#5aa87a;color:#fff;font-size:13px;padding:10px 22px">FROM CHECKPOINT</button><br><button id="rs" style="padding:8px 16px;font-size:11px;background:#ffffff1c;color:#fff">RESET PROGRESS</button></div></div>
+<p style="font-size:11px;opacity:.7">Hold ▲ GAS · ◀ ▶ steer · ▼ brake · +/− shift<br>Keyboard: W gas, A/D steer, S brake, E/Q shift<br>The farther you drive, the more every meter pays</p><button id="go">START DRIVE</button><br><button id="gc" style="display:none;background:#5aa87a;color:#fff;font-size:13px;padding:10px 22px">FROM CHECKPOINT</button><br><button id="rs" style="padding:8px 16px;font-size:11px;background:#ffffff1c;color:#fff">RESET PROGRESS</button></div></div>
 <div id="over" class="ov h"><div class="bx pn"><h1 id="ot">WRECKED</h1><div class="st"><div><b id="os">0</b><span>SCORE</span></div><div><b id="od">0</b><span>KM</span></div><div><b id="oc">0</b><span>COINS</span></div></div><p id="ob"></p><button id="rt">DRIVE AGAIN</button> <button id="rc" style="background:#5aa87a;color:#fff;display:none">FROM CHECKPOINT</button> <button id="mn" style="background:#ffffff22;color:#fff">MENU</button></div></div>
 <script>
 (function(){
@@ -56,9 +56,9 @@ const bio=z=>Math.floor(Math.max(0,z)/800)%4;
 const PAL=[{n:'MOUNTAIN',mu:1,rr:0,t:['#dccfaa','#d1c39d'],g:['#a9be9d','#9db393','#94ab8b'],tr:['#397966','#438a70','#559d79'],sh:'#6d9077'},{n:'SAND',mu:.9,rr:.7,t:['#d9bd7a','#cfb26c'],g:['#e8cf94','#dfc283','#d8b974'],tr:['#8a9a55','#9aab62','#7f8f4b'],sh:'#b3a064'},{n:'MUD',mu:.75,rr:1,t:['#6b5238','#5f4830'],g:['#7a8a4c','#6f7f44','#667540'],tr:['#2f5a46','#356652','#3d7058'],sh:'#4f6a3a'},{n:'SNOW',mu:.62,rr:.3,t:['#c4d0d8','#b9c7d0'],g:['#f4f8fa','#eaf0f4','#e0e8ee'],tr:['#4c7a70','#5a8a80','#6a9a90'],sh:'#c8d8dc'}];
 let keys={},tc={},state='menu',paused=false,car,used,L=[],parts=[],shake=0,toastT=0,best=0,last=0,aud,osc,flt,gn,ab;
 try{best=+localStorage.getItem('shiro_best')||0}catch(e){}
-const CARS=[{n:'Scout',pw:1,gr:1,tk:1,wt:1,ar:1,p:0,c:'#c6d3d8'},{n:'Ranger',pw:1.12,gr:1.12,tk:1.1,wt:1.1,ar:.9,p:1500,c:'#d9b38a'},{n:'Titan',pw:1.4,gr:1.4,tk:1.25,wt:1.35,ar:.7,p:5500,c:'#4c6b8a'},{n:'Dune Buggy',pw:1.15,gr:.95,tk:.85,wt:.7,ar:1.3,p:1800,c:'#e8c15a'},{n:'Bruiser',pw:1.15,gr:1.2,tk:1.2,wt:1.5,ar:.6,p:3000,c:'#7d8f78'},{n:'Rally Evo',pw:1.3,gr:1.3,tk:1,wt:.9,ar:1,p:4200,c:'#c95f4a'}];
+const CARS=[{n:'Scout',pw:1,gr:1,tk:1,wt:1,ar:1,p:0,c:'#c6d3d8'},{n:'Ranger',pw:1.12,gr:1.12,tk:1.1,wt:1.1,ar:.9,p:1500,c:'#d9b38a'},{n:'Titan',pw:1.4,gr:1.4,tk:1.25,wt:1.35,ar:.7,p:5500,c:'#4c6b8a'},{n:'Dune Buggy',pw:1.15,gr:.95,tk:.85,wt:.7,ar:1.3,p:1800,c:'#e8c15a'},{n:'Bruiser',pw:1.15,gr:1.2,tk:1.2,wt:1.5,ar:.6,p:3000,c:'#7d8f78'},{n:'Rally Evo',pw:1.3,gr:1.3,tk:1,wt:.9,ar:1,p:4200,c:'#c95f4a'},{n:"Jeep ZJ '98 4.0L",pw:1.08,gr:1.25,tk:1.15,wt:1.25,ar:.8,p:3400,c:'#2f5d3a'}];
 const UPG=[{k:'tank',n:'Fuel Tank',d:'+20% range per level',b:500},{k:'tire',n:'Tires',d:'+10% traction per level',b:600},{k:'arm',n:'Skid Plates',d:'-15% crash damage per level',b:500},{k:'tune',n:'Engine Tune',d:'+6% torque per level',b:800},{k:'lock',n:'Diff Lock',d:'Better climbing, less wheelspin',b:700}];
-const ENG=[{id:'na',n:'Naturally Aspirated',d:'Smooth, efficient, predictable.',p:0},{id:'tb',n:'Turbo',d:'Spools up on full throttle for a big speed surge.',p:450},{id:'eb',n:'eBay Turbo',d:'Cheap knockoff. Strong boost, but it damages your car.',p:200},{id:'sc',n:'Supercharger',d:'Instant power everywhere, but thirsty.',p:2200}];
+const ENG=[{id:'na',n:'Naturally Aspirated',d:'Smooth, efficient, predictable.',p:0},{id:'tb',n:'Turbo',d:'Spools up on full throttle for a big speed surge.',p:450},{id:'eb',n:'eBay Turbo',d:'Cheap knockoff. Strong boost, but it damages your car.',p:200},{id:'sc',n:'Supercharger',d:'Instant power everywhere, a whine that climbs with RPM, but thirsty.',p:2200}];
 let sv={money:250,own:['c0','na'],car:0,eng:'na',tank:0},tab=0;
 try{const q=JSON.parse(localStorage.getItem('shiro_save'));if(q&&q.own)sv=q}catch(e){}
 sv.up=sv.up||{tank:sv.tank||0,tire:0,arm:0,tune:0,lock:0};sv.trans=sv.trans||'A';if(!sv.v2){sv.trans='A';sv.v2=1}
@@ -70,10 +70,10 @@ function menu(){$('mny').textContent='$'+sv.money+' · DAMAGE '+Math.round(sv.dm
  else if(tab==1)ENG.forEach(e=>s+=row(e.n,e.d,sv.own.includes(e.id),sv.eng==e.id,e.p,e.id));
  else UPG.forEach(u=>{const l=sv.up[u.k],m=l>=3,p=u.b*(l+1);s+='<div class="rw"><div><b>'+u.n+' Lv '+l+'/3</b><span>'+u.d+'</span></div><button data-k="u:'+u.k+'" data-p="'+p+'"'+(m?' disabled':'')+'>'+(m?'MAX':'UPGRADE $'+p)+'</button></div>'})
  if(tab==2){const pc=Math.ceil(sv.dmg||0);s='<div class="rw"><div><b>Repair Damage</b><span>Damage carries over until fixed. '+pc+'% now · $6 per 1%</span></div><button data-k="rep" data-p="0"'+(pc?'':' disabled')+'>'+(pc?'REPAIR $'+pc*6:'NO DAMAGE')+'</button></div>'+s;
-  [['bov','Blow-off Valve','Vents turbo boost on lift-off. Turbos take compressor-surge damage without one.',300],['ic','Intercooler','Cools charge air. Any forced induction takes heat damage without one.',400]].forEach(x=>{const o=sv.own.includes(x[0]);s+='<div class="rw"><div><b>'+x[1]+'</b><span>'+x[2]+'</span></div><button data-k="'+x[0]+'" data-p="'+x[3]+'"'+(o?' disabled':'')+'>'+(o?'OWNED':'BUY $'+x[3])+'</button></div>'})}
+  [['bov','Blow-off Valve','Big "PSSHHH" dump on lift-off. Turbos take compressor-surge damage without one.',300],['ic','Intercooler','Cools charge air. Any forced induction takes heat damage without one.',400]].forEach(x=>{const o=sv.own.includes(x[0]);s+='<div class="rw"><div><b>'+x[1]+'</b><span>'+x[2]+'</span></div><button data-k="'+x[0]+'" data-p="'+x[3]+'"'+(o?' disabled':'')+'>'+(o?'OWNED':'BUY $'+x[3])+'</button></div>'})}
  $('lst').innerHTML=s}
 $('best').textContent=best;
-function reset(){car={x:0,z:0,v:0,yaw:0,dmg:0,fuel:100,coins:0,bonus:0,steer:0,bob:0,t:0,thr:0,g:1,sh:0,rpm:900,boost:0,spin:0,lat:0,grade:0};used=new Set();parts=[];shake=0}
+function reset(){car={x:0,z:0,v:0,yaw:0,dmg:0,fuel:100,coins:0,bonus:0,cbn:0,steer:0,bob:0,t:0,thr:0,g:1,sh:0,rpm:900,boost:0,spin:0,lat:0,grade:0};used=new Set();parts=[];shake=0}
 reset();
 function add(r,z,b,t,lat,s,k){const id=r*10+k;if(!used.has(id))L.push({id,t,x:b+lat,z,s})}
 function build(){L=[];const r0=Math.floor(car.z/5);for(let r=Math.max(1,r0-3);r<r0+28;r++){const z=r*5+h(r*3.1)*4,b=px(z),cl=(z%800<70||z%800>730);
@@ -93,22 +93,31 @@ function initAudio(){if(aud)return;try{aud=new(window.AudioContext||window.webki
  osc=mk('sawtooth',40);const o2=mk('square',20),o3=mk('triangle',80),eg=G(.3);flt=F('lowpass',400,.8);osc.connect(flt);o2.connect(flt);o3.connect(flt);flt.connect(eg);eg.connect(gn);
  const xn=ns(),xf=F('lowpass',300),xg=G(.2),lf=mk('sine',30),lg=G(.15);xn.connect(xf);xf.connect(xg);xg.connect(gn);lf.connect(lg);lg.connect(xg.gain);
  const inn=ns(),inf=F('bandpass',900,1.5),ig=G(0);inn.connect(inf);inf.connect(ig);ig.connect(gn);
- const tw=mk('sine',1500),tg=G(0),sw=mk('sawtooth',500),sf=F('lowpass',4000),sg=G(0);tw.connect(tg);tg.connect(gn);sw.connect(sf);sf.connect(sg);sg.connect(gn);
- ab={nb,o2,o3,eg,xf,xg,lf,inf,ig,tw,tg,sw,sg,prev:0}}catch(e){aud=null}}
+ const tw=mk('sine',1500),tg=G(0),sw=mk('sawtooth',500),sf=F('lowpass',2000),sg=G(0),s2=mk('sine',1000),g2=G(0);tw.connect(tg);tg.connect(gn);sw.connect(sf);sf.connect(sg);sg.connect(gn);s2.connect(g2);g2.connect(gn);
+ ab={nb,o2,o3,eg,xf,xg,lf,inf,ig,tw,tg,sw,sg,sf,s2,g2,prev:0}}catch(e){aud=null}}
 function burst(fq,q,vol,len){const A=aud,s=A.createBufferSource();s.buffer=ab.nb;const f=A.createBiquadFilter();f.type=q>1.5?'bandpass':'lowpass';f.frequency.value=fq;f.Q.value=q;const g=A.createGain();g.gain.setValueAtTime(vol,A.currentTime);g.gain.exponentialRampToValueAtTime(.001,A.currentTime+len);s.connect(f);f.connect(g);g.connect(gn);s.start(0,Math.random());s.stop(A.currentTime+len+.05)}
+/* blow-off "PSSSHHHH": sharp attack, sweeping hiss tail, airy top layer, tiny chirp */
+function psh(v,len,fq){const A=aud,t=A.currentTime;
+ const mk=(type,f0,f1,q,g0,hold)=>{const s=A.createBufferSource();s.buffer=ab.nb;s.loop=true;const b=A.createBiquadFilter();b.type=type;b.Q.value=q;b.frequency.setValueAtTime(f0,t);b.frequency.exponentialRampToValueAtTime(f1,t+len);const g=A.createGain();g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(g0,t+.012);g.gain.setTargetAtTime(g0*.6,t+.03,len*.22);g.gain.setTargetAtTime(0,t+len*hold,len*.16);s.connect(b);b.connect(g);g.connect(gn);s.start(t,Math.random());s.stop(t+len+.4)};
+ mk('bandpass',fq*1.35,fq*.5,.9,v,.6);mk('highpass',6500,3000,.7,v*.45,.5);mk('bandpass',fq*.5,fq*.25,1.5,v*.35,.7);
+ const o=A.createOscillator(),og=A.createGain();o.type='sine';o.frequency.setValueAtTime(2800,t);o.frequency.exponentialRampToValueAtTime(800,t+len*.5);og.gain.setValueAtTime(v*.07,t);og.gain.exponentialRampToValueAtTime(.001,t+len*.6);o.connect(og);og.connect(gn);o.start(t);o.stop(t+len)}
 function sfx(dt,E){const t=aud.currentTime,r=car.rpm,th=car.thr,b=car.boost,fh=r/30,k=(p,v,s)=>p.setTargetAtTime(v,t,s||.05),tb=E==='tb'||E==='eb',eb=E==='eb';
  const lim=r>6900&&th>.5?(Math.sin(car.t*70)>0?1:.25):1;
  k(osc.frequency,fh);k(ab.o2.frequency,fh/2);k(ab.o3.frequency,fh*2);k(flt.frequency,700+r*.6+th*1200);k(ab.eg.gain,(.25+th*.35)*lim,.04);
  k(ab.lf.frequency,fh);k(ab.xf.frequency,400+r*.3+th*900);k(ab.xg.gain,(.1+th*.25+r/7000*.12)*lim,.05);
  k(ab.inf.frequency,500+r*.3+b*400);k(ab.ig.gain,th*Math.min(1,r/5000)*.15,.06);
  k(ab.tw.frequency,1200+b*(eb?3800:3000)+(eb?Math.sin(car.t*40)*90:0));k(ab.tg.gain,tb?b*(eb?.05:.035)*th:0,.06);
- k(ab.sw.frequency,r*.75+250);k(ab.sg.gain,E==='sc'?.01+th*.04*b:0,.06);
- if(tb&&th>.7&&b>.35)ab.hi=1;if(tb&&ab.hi&&th<.4&&(ab.hi=0,1)&&sv.own.includes('bov'))eb?(burst(2600,2,.3,.5),setTimeout(()=>burst(2200,2,.2,.25),160)):(burst(3600,2,1,.6),burst(1400,.8,.7,.45),burst(6500,3,.5,.35));
+ const rn=Math.min(1,r/7000),sc=E==='sc';
+ k(ab.sw.frequency,r*1.15+300);k(ab.s2.frequency,r*2.3+600);k(ab.sf.frequency,1400+rn*rn*7500);
+ k(ab.sg.gain,sc?(.012+Math.pow(rn,1.8)*.3)*(.4+.6*th):0,.05);k(ab.g2.gain,sc?Math.pow(rn,2.4)*.07*(.3+.7*th):0,.05);
+ if(tb&&th>.7&&b>.35){ab.hi=1;ab.pk=Math.max(ab.pk||0,b)}
+ if(tb&&ab.hi&&th<.4){ab.hi=0;if(sv.own.includes('bov')){const pk=ab.pk||b;eb?(psh(.45*pk+.1,.4,3600),setTimeout(()=>psh(.4*pk+.1,.32,3100),170),setTimeout(()=>psh(.32*pk+.08,.28,2800),340)):psh(.8*pk+.35,1.15,4300)}ab.pk=0}
  if(th<.1&&r>3500&&Math.random()<dt*5)burst(700,.7,.35,.08);
  ab.prev=th;gn.gain.setTargetAtTime(.9,t,.15)}
-function _ia(){if(aud)return;try{aud=new(window.AudioContext||window.webkitAudioContext)();osc=aud.createOscillator();osc.type='sawtooth';flt=aud.createBiquadFilter();flt.type='lowpass';flt.frequency.value=300;gn=aud.createGain();gn.gain.value=0;osc.connect(flt);flt.connect(gn);gn.connect(aud.destination);osc.start()}catch(e){aud=null}}
 function vib(n){try{navigator.vibrate&&navigator.vibrate(n)}catch(e){}}
-function end(t){state='over';gn&&(gn.gain.value=0);const sc=score(),earn=Math.floor((car.z-(car.z0||0))/3)+car.coins*10;sv.money+=earn;sv.dmg=t==='WRECKED'?Math.min(car.dmg,90):car.dmg;$('rc').style.display=sv.cp>0?'inline-block':'none';save();let nb=sc>best;if(nb){best=sc;try{localStorage.setItem('shiro_best',best)}catch(e){}}
+/* money scales with distance: every meter pays more the farther you get; coins pay more each biome */
+const earnF=()=>{const dm=Math.max(0,car.z-(car.z0||0));return Math.floor(dm/3*(1+dm/2500))+Math.floor(car.coins*10*(1+Math.floor(dm/800)*.25))+(car.cbn||0)};
+function end(t){state='over';gn&&(gn.gain.value=0);const sc=score(),earn=earnF();sv.money+=earn;sv.dmg=t==='WRECKED'?Math.min(car.dmg,90):car.dmg;$('rc').style.display=sv.cp>0?'inline-block':'none';save();let nb=sc>best;if(nb){best=sc;try{localStorage.setItem('shiro_best',best)}catch(e){}}
  $('ot').textContent=t;$('os').textContent=sc;$('od').textContent=(car.z/1000).toFixed(2);$('oc').textContent=car.coins;$('ob').textContent=(nb?'New personal best! ':'Best: '+best+' ')+'· Earned $'+earn+' · Damage '+Math.round(sv.dmg)+'%';$('best').textContent=best;vib([60,40,120]);beep(90,.6,'sawtooth');setTimeout(()=>{if(state==='over')$('over').classList.remove('h')},500)}
 const score=()=>Math.floor((car.z-(car.z0||0))/2)+car.coins*50+car.bonus;
 const GR=[3.6,2.3,1.6,1.15,.85],K=300,RED=7000;
@@ -157,7 +166,7 @@ function update(dt){
  if(E!=='na'&&!hi&&car.boost>.5)car.dmg+=dt*.35*car.boost;
  if(tbo&&car.thr>.7&&car.boost>.35)car.hi=1;if(tbo&&car.hi&&car.thr<.4){car.hi=0;if(!hb){car.dmg+=2.5;shake=Math.max(shake,5);toast('COMPRESSOR SURGE')}}
  if(ovr&&car.t%1.5<dt)toast('OVER-REVVING! SHIFT UP');
- const cn=Math.floor(car.z/800);if(cn>car.cn){car.cn=cn;sv.cp=cn*800;car.fuel=Math.min(100,car.fuel+60);save();toast('CHECKPOINT · '+PAL[bio(car.z)].n)}
+ const cn=Math.floor(car.z/800);if(cn>car.cn){car.cn=cn;sv.cp=cn*800;car.fuel=Math.min(100,car.fuel+60);const bn=cn*150;car.cbn+=bn;save();toast('CHECKPOINT +$'+bn+' · '+PAL[bio(car.z)].n)}
  if((cook||ovr)&&Math.random()<dt*25)parts.push({x:W/2+(Math.random()-.5)*60,y:H*.7,vx:(Math.random()-.5)*40,vy:-60-Math.random()*50,l:.7,c:'#4a4a4a'});
  build();
  for(const o of L){const ex=o.x-car.x,ez=o.z-car.z,d=Math.hypot(ex,ez);
@@ -169,33 +178,6 @@ function update(dt){
  if(car.dmg>=100)end('WRECKED');else if(car.fuel<=0&&car.v<1)end('OUT OF FUEL');
  if((car.v>4||car.spin)&&Math.random()<dt*(car.spin?70:40))parts.push({x:W/2+(Math.random()-.5)*90,y:H*.86,vx:(Math.random()-.5)*60,vy:-30-Math.random()*40,l:.5,c:off?'#a89b78':'#e0d6bb'});
  if(aud&&ab)sfx(dt,E)}
-function _old(dt){if(state!=='play'||paused)return;car.t+=dt;
- const Lk=keys.a||keys.ArrowLeft||tc.l,Rk=keys.d||keys.ArrowRight||tc.r,br=keys.s||keys.ArrowDown||keys[' ']||tc.b,nt=(keys.Shift||keys.e||tc.n)&&car.nit>0&&car.fuel>0,gs=keys.w||keys.ArrowUp||tc.g,C=CARS[sv.car],E=sv.eng;
- const off=Math.abs(car.x-px(car.z))>6.5;car.thr+=((gs&&car.fuel>0?1:0)-car.thr)*dt*4;if(E==='tb')car.sp=Math.max(0,Math.min(1,car.sp+(car.thr>.7&&car.v>6?dt*.45:-dt*1.2)));else car.sp=0;
- let mx=(13+Math.min(car.z/250,6))*C.pw*(E==='sc'?1.2:E==='tb'?1+.45*car.sp:1)*car.thr;if(off)mx*=1-.3/C.gr;if(nt){mx*=1.3;car.nit=Math.max(0,car.nit-dt*28)}
- if(car.fuel<=0)mx=0;
- if(br)car.v-=35*dt;else car.v+=(mx-car.v)*dt*(car.thr>.05?(nt?1.2:.5):.2);car.v=Math.max(0,car.v);
- const st=(Rk?1:0)-(Lk?1:0);car.steer+=(st-car.steer)*dt*8;
- car.yaw+=car.steer*dt*1.25*C.gr*Math.min(1,car.v/8+.2);car.yaw-=car.yaw*dt*.45;car.yaw=Math.max(-1.1,Math.min(1.1,car.yaw));
- car.x+=Math.sin(car.yaw)*car.v*dt;car.z+=Math.cos(car.yaw)*car.v*dt;
- const dx=car.x-px(car.z);if(Math.abs(dx)>40){car.x=px(car.z)+Math.sign(dx)*40;car.v*=.8}
- car.fuel=Math.max(0,car.fuel-dt*(.2+car.thr*1.3+(nt?1.5:0))*(E==='sc'?1.35:E==='tb'?1.1:1)/(C.tk*(1+.2*sv.tank)));car.bob+=car.v*dt*.5;if(off)shake=Math.max(shake,car.v*.03);
- car.hot=Math.max(0,(car.hot||0)+(car.rpm>6400?dt:-dt*2));
- const cook=E==='eb'&&car.boost>.3,ovr=car.hot>1.5;
- if(cook)car.dmg+=dt*3.5*car.boost;if(ovr)car.dmg+=dt*4;
- if((cook||ovr)&&car.t%1.5<dt)toast(ovr?'OVER-REVVING! SHIFT UP':'eBAY TURBO IS COOKING');
- if((cook||ovr)&&Math.random()<dt*25)parts.push({x:W/2+(Math.random()-.5)*60,y:H*.7,vx:(Math.random()-.5)*40,vy:-60-Math.random()*50,l:.7,c:'#4a4a4a'});
- build();
- for(const o of L){const ex=o.x-car.x,ez=o.z-car.z,d=Math.hypot(ex,ez);
-  if(o.t==='r'||o.t==='t'){const rad=o.t==='r'?o.s*.7+.9:o.s*.3+.9;
-   if(d<rad){used.add(o.id);car.v*=.4;car.dmg+=o.t==='r'?13:20;shake=14;vib(40);beep(80,.25,'sawtooth');toast(o.t==='r'?'ROCK!':'OUCH!');for(let i=0;i<14;i++)parts.push({x:W/2,y:H*.8,vx:(Math.random()-.5)*400,vy:-Math.random()*300,l:.6,c:'#8a9a9f'});}
-   else if(o.t==='r'&&ez<-.5&&ez>-2&&Math.abs(ex)<rad+1.6&&!o.nm){o.nm=1;used.add(o.id+.5);car.bonus+=25;toast('CLOSE CALL +25')}}
-  else if(o.t==='c'&&d<2.4){used.add(o.id);car.coins++;car.nit=Math.min(100,car.nit+9);beep(880,.12,'triangle')}
-  else if(o.t==='f'&&d<2.6){used.add(o.id);car.fuel=Math.min(100,car.fuel+35);toast('FUEL +35');beep(520,.25,'triangle')}}
- if(car.dmg>=100)end('WRECKED');else if(car.fuel<=0&&car.v<1)end('OUT OF FUEL');
- if(car.v>4&&Math.random()<dt*40)parts.push({x:W/2+(Math.random()-.5)*90,y:H*.86,vx:(Math.random()-.5)*60,vy:-30-Math.random()*40,l:.5,c:off?'#a89b78':'#e0d6bb'});
- if(nt&&Math.random()<dt*60)parts.push({x:W/2+(Math.random()<.5?-1:1)*28,y:H*.84,vx:(Math.random()-.5)*40,vy:80+Math.random()*60,l:.25,c:'#f2a33a'});
- if(aud){osc.frequency.setTargetAtTime(45+car.v*5+car.thr*30+(nt?20:0),aud.currentTime,.1);flt.frequency.setTargetAtTime(200+car.v*12,aud.currentTime,.1);gn.gain.setTargetAtTime(paused?0:.04,aud.currentTime,.1)}}
 let camH=2.7,hor=0,F=0;
 function pr(x,z,y){const dx=x-car.x,dz=z-car.z,s=Math.sin(car.yaw),c=Math.cos(car.yaw),rx=dx*c-dz*s,zz=dx*s+dz*c+6;if(zz<1)return null;const sc=F/zz;return{x:W/2+rx*sc,y:hor+(camH-ht(x,z)-(y||0))*sc,sc,d:zz}}
 function poly(a,col){cx.beginPath();a.forEach((p,i)=>i?cx.lineTo(p.x,p.y):cx.moveTo(p.x,p.y));cx.closePath();cx.fillStyle=col;cx.fill()}
@@ -221,10 +203,19 @@ function draw(){F=H*.9;hor=H*.36+car.grade*H*1.2;camH=2.7+ht(car.x,car.z);
   else if(o.t==='k'){const w=6*p.sc,hh=5*p.sc;cx.fillStyle='#e5b15b';cx.fillRect(p.x-w-4,p.y-hh,8,hh);cx.fillRect(p.x+w-4,p.y-hh,8,hh);cx.fillRect(p.x-w,p.y-hh,w*2,hh*.22);cx.fillStyle='#222';for(let i=0;i<8;i++)if(i%2)cx.fillRect(p.x-w+i*w/4,p.y-hh,w/4,hh*.22)}
   else if(o.t==='f'){const q=p.sc*.9,yy=p.y-p.sc*.3;cx.fillStyle='#c9473d';cx.fillRect(p.x-q*.6,yy-q*1.3,q*1.2,q*1.3);cx.fillStyle='#8a2f2a';cx.fillRect(p.x-q*.25,yy-q*1.6,q*.5,q*.3);cx.fillStyle='#fff';cx.fillRect(p.x-q*.4,yy-q*.85,q*.8,q*.2)}
   cx.globalAlpha=1}
- car.v>0&&0;carDraw();
+ carDraw();
  for(const p of parts){cx.globalAlpha=Math.max(0,p.l*1.6);cx.fillStyle=p.c;cx.beginPath();cx.arc(p.x,p.y,5+(.6-p.l)*14,0,6.3);cx.fill()}cx.globalAlpha=1;
  if(car.dmg>50){cx.fillStyle='rgba(180,40,30,'+((car.dmg-50)/250)+')';cx.fillRect(0,0,W,H)}
  cx.restore()}
+/* per-vehicle styling drawn over the base body */
+function sd(i){const R=(x,y,w,h,c,r)=>{cx.fillStyle=c;cx.beginPath();cx.roundRect(x,y,w,h,r||2);cx.fill()},T=(a,b,c,d,col,w)=>{cx.strokeStyle=col;cx.lineWidth=w;cx.beginPath();cx.moveTo(a,b);cx.lineTo(c,d);cx.stroke()};
+ if(i==0){R(-42,-72,84,4,'#3a444a');R(-38,-74,4,10,'#3a444a');R(34,-74,4,10,'#3a444a');R(-52,-2,104,4,'#ffffff99')}
+ else if(i==1){R(-34,-76,68,8,'#222');for(let k=0;k<4;k++)R(-26+k*16,-74,8,4,'#ffd45a');R(-52,-6,104,6,'#8a5a34');R(-52,8,104,3,'#f2e3c4')}
+ else if(i==2){R(-66,0,32,50,'#111',10);R(34,0,32,50,'#111',10);R(-58,30,116,10,'#2c3338',3);R(40,-96,6,44,'#222');R(-52,-26,10,10,'#e08a2e');R(42,-26,10,10,'#e08a2e')}
+ else if(i==3){R(-30,-52,60,28,'#3a2f25',6);cx.fillStyle='#e8e0d0';cx.beginPath();cx.arc(0,-48,11,0,6.3);cx.fill();T(-44,-24,-34,-76,'#222',5);T(44,-24,34,-76,'#222',5);T(-36,-76,36,-76,'#222',5);T(-40,-50,40,-50,'#222',3);T(30,-76,30,-120,'#555',2);cx.fillStyle='#e0522e';cx.beginPath();cx.moveTo(30,-120);cx.lineTo(52,-112);cx.lineTo(30,-104);cx.fill()}
+ else if(i==4){R(-60,-30,12,64,'#4a5560',3);R(48,-30,12,64,'#4a5560',3);R(-40,-66,80,8,'#4a5a48',2);R(-52,-30,104,6,'#33403a');for(let k=0;k<4;k++){R(-56,-22+k*14,4,4,'#9aa6ad');R(52,-22+k*14,4,4,'#9aa6ad')}R(-50,-96,6,34,'#222');R(44,-96,6,34,'#222');R(-60,30,120,10,'#2a2f33',3)}
+ else if(i==5){R(-8,-26,6,56,'#f4f4f4');R(2,-26,6,56,'#f4f4f4');R(-58,-80,116,8,'#111',2);R(-58,-90,5,24,'#111');R(53,-90,5,24,'#111');R(-14,-72,5,10,'#222');R(9,-72,5,10,'#222');R(-18,-12,36,14,'#e8e8e8',3);cx.fillStyle='#c95f4a';cx.font='bold 11px sans-serif';cx.textAlign='center';cx.fillText('EVO',0,-1)}
+ else if(i==6){R(-46,-86,92,50,'#2c4a34',7);R(-38,-80,76,36,'#2f4d5c',4);T(0,-80,0,-44,'#2c4a34',3);T(-38,-62,38,-62,'#2c4a34',2);R(-46,-92,92,4,'#222');for(let k=0;k<5;k++)R(-40+k*18,-98,4,8,'#222');R(-54,-26,9,30,'#c0392b',3);R(45,-26,9,30,'#c0392b',3);R(-16,14,32,11,'#eee',2);cx.fillStyle='#222';cx.font='bold 8px sans-serif';cx.textAlign='center';cx.fillText('ZJ 4.0',0,22);R(-52,2,104,3,'#c9b27a')}}
 function carDraw(){const u=Math.min(W,H*.6)/400,by=Math.sin(car.bob)*(car.v>2?2:0);cx.save();cx.translate(W/2,H*.8+by);cx.rotate(car.steer*car.v*.0025);cx.scale(u*1.5,u*1.5);
  cx.fillStyle='rgba(0,0,0,.2)';cx.beginPath();cx.ellipse(0,44,62,10,0,0,6.3);cx.fill();
  cx.fillStyle='#222';for(const x of[-48,48]){cx.beginPath();cx.roundRect(x-12,2,24,44,7);cx.fill()}
@@ -234,8 +225,8 @@ function carDraw(){const u=Math.min(W,H*.6)/400,by=Math.sin(car.bob)*(car.v>2?2:
  cx.fillStyle='#252b30';cx.fillRect(-46,-64,92,5);cx.fillRect(-42,-66,4,12);cx.fillRect(38,-66,4,12);
  cx.fillStyle='#2b3236';cx.beginPath();cx.arc(0,-6,17,0,6.3);cx.fill();cx.fillStyle='#555f66';cx.beginPath();cx.arc(0,-6,8,0,6.3);cx.fill();
  cx.fillStyle=(keys.s||keys.ArrowDown||tc.b)?'#ff3b3b':'#b8403a';cx.fillRect(-48,6,14,10);cx.fillRect(34,6,14,10);
- cx.fillStyle='#555f66';cx.fillRect(-50,22,100,8);cx.restore()}
-function hud(){$('score').textContent=score();$('fb').style.width=car.fuel+'%';$('fb').style.background=car.fuel<25?'#d9695f':'#e5b15b';$('db').style.width=car.dmg+'%';$('nb').style.width=car.boost*100+'%';$('bt').textContent=sv.eng==='na'?'—':Math.round(car.boost*14)+' psi';$('spd').innerHTML=Math.round(car.v*3.6)+' <small>km/h</small>';$('bio').textContent=PAL[bio(car.z)].n;$('km').textContent=(car.z/1000).toFixed(2)+' km · '+Math.round(car.grade*100)+'%'}
+ cx.fillStyle='#555f66';cx.fillRect(-50,22,100,8);sd(sv.car);cx.restore()}
+function hud(){$('score').textContent=score();$('fb').style.width=car.fuel+'%';$('fb').style.background=car.fuel<25?'#d9695f':'#e5b15b';$('db').style.width=car.dmg+'%';$('nb').style.width=car.boost*100+'%';$('bt').textContent=sv.eng==='na'?'—':Math.round(car.boost*14)+' psi';$('spd').innerHTML=Math.round(car.v*3.6)+' <small>km/h</small>';$('bio').textContent=PAL[bio(car.z)].n;$('km').textContent=(car.z/1000).toFixed(2)+' km · '+Math.round(car.grade*100)+'%';$('cash').textContent='$'+earnF()+' · x'+(1+Math.max(0,car.z-(car.z0||0))/2500).toFixed(2)}
 function frame(t){const dt=Math.min((t-last)/1000||0,.05);last=t;update(dt);
  if(state!=='play'&&!L.length)build();
  for(let i=parts.length-1;i>=0;i--){const p=parts[i];p.x+=p.vx*dt;p.y+=p.vy*dt;p.l-=dt;if(p.l<=0)parts.splice(i,1)}
@@ -255,8 +246,8 @@ $('lst').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)r
  if(k==='rep'){const pc=Math.min(Math.ceil(sv.dmg||0),Math.floor(sv.money/6));if(pc<=0)return;sv.money-=pc*6;sv.dmg=Math.max(0,(sv.dmg||0)-pc);save();menu();return}
  if(k[0]==='u'){const u=k.slice(2);if(sv.up[u]<3&&sv.money>=p){sv.money-=p;sv.up[u]++}else return}
  else{if(!sv.own.includes(k)){if(sv.money<p){initAudio();beep(150,.2);return}sv.money-=p;sv.own.push(k)}if(k[0]==='c')sv.car=+k.slice(1);else if(k!=='bov'&&k!=='ic')sv.eng=k}
- let rsT=0;$('rs').addEventListener('click',()=>{const b=$('rs');if(!rsT){b.textContent='TAP AGAIN TO ERASE EVERYTHING';rsT=setTimeout(()=>{rsT=0;b.textContent='RESET PROGRESS'},3000);return}clearTimeout(rsT);rsT=0;b.textContent='RESET PROGRESS';sv={money:250,own:['c0','na'],car:0,eng:'na',tank:0,up:{tank:0,tire:0,arm:0,tune:0,lock:0},trans:'A',v2:1,v3:1,cp:0,dmg:0};best=0;try{localStorage.removeItem('shiro_best')}catch(e){}$('best').textContent=0;tab=0;save();menu()});
-save();menu()});
+ save();menu()});
+let rsT=0;$('rs').addEventListener('click',()=>{const b=$('rs');if(!rsT){b.textContent='TAP AGAIN TO ERASE EVERYTHING';rsT=setTimeout(()=>{rsT=0;b.textContent='RESET PROGRESS'},3000);return}clearTimeout(rsT);rsT=0;b.textContent='RESET PROGRESS';sv={money:250,own:['c0','na'],car:0,eng:'na',tank:0,up:{tank:0,tire:0,arm:0,tune:0,lock:0},trans:'A',v2:1,v3:1,cp:0,dmg:0};best=0;try{localStorage.removeItem('shiro_best')}catch(e){}$('best').textContent=0;tab=0;save();menu()});
 menu();
 $('pause').addEventListener('click',()=>{if(state!=='play')return;paused=!paused;try{aud&&(paused?aud.suspend():aud.resume())}catch(e){}$('pause').textContent=paused?'RESUME':'PAUSE'});
 document.addEventListener('visibilitychange',()=>{if(document.hidden&&state==='play'){paused=true;$('pause').textContent='RESUME'}});
